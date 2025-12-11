@@ -137,6 +137,7 @@ export default function RoomClient({ roomId }: RoomClientProps) {
         onToggleWhiteboard={() => setShowWhiteboard((v) => !v)}
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
+        role={role}
       />
     </LiveKitRoom>
   );
@@ -147,11 +148,13 @@ function InRoomLayout({
   onToggleWhiteboard,
   menuOpen,
   setMenuOpen,
+  role,
 }: {
   showWhiteboard: boolean;
   onToggleWhiteboard: () => void;
   menuOpen: boolean;
   setMenuOpen: (val: boolean) => void;
+  role: Role;
 }) {
   const connectionState = useConnectionState();
 
@@ -197,7 +200,7 @@ function InRoomLayout({
           </div>
         </header>
         <section className="flex-1 overflow-hidden">
-          {showWhiteboard ? <WhiteboardPanel /> : <VideoGrid />}
+          {showWhiteboard ? <WhiteboardPanel role={role} /> : <VideoGrid />}
         </section>
         <footer className="border-t border-slate-800 px-4 py-3">
           <ControlBar variation="verbose" />

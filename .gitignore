@@ -56,3 +56,5 @@ out
 npm-debug.log*
 .DS_Store
 *.pem
+/apps/slate/
+/apps/sync-canvas/
