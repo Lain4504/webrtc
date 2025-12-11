@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="create project">
-      <change beforePath="$PROJECT_DIR$/apps/server-livekit/.env" beforeDir="false" />
+    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="camera display">
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/whiteboard-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/whiteboard-panel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +52,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "E:\\JetBrains\\WebStorm 2025.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "E:\\Ky8\\webrtc\\apps\\web-livekit\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -77,7 +79,7 @@
       <workItem from="1765459914092" duration="1392000" />
       <workItem from="1765462833324" duration="67000" />
       <workItem from="1765464013787" duration="67000" />
-      <workItem from="1765464603298" duration="3178000" />
+      <workItem from="1765464603298" duration="4621000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <option name="closed" value="true" />
@@ -95,7 +97,31 @@
       <option name="project" value="LOCAL" />
       <updated>1765467738290</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="create project">
+      <option name="closed" value="true" />
+      <created>1765467829132</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1765467829132</updated>
+    </task>
+    <task id="LOCAL-00004" summary="create project">
+      <option name="closed" value="true" />
+      <created>1765468105628</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1765468105628</updated>
+    </task>
+    <task id="LOCAL-00005" summary="camera display">
+      <option name="closed" value="true" />
+      <created>1765468775355</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765468775355</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,7 +140,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="create project" />
-    <option name="LAST_COMMIT_MESSAGE" value="create project" />
+    <MESSAGE value="camera display" />
+    <option name="LAST_COMMIT_MESSAGE" value="camera display" />
   </component>
   <component name="com.apollographql.ijplugin.settings.ProjectSettingsState">
     <option name="lspPassPathToSuperGraphYaml" value="false" />

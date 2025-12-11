@@ -36,6 +36,8 @@ export default function RoomClient({ roomId }: RoomClientProps) {
   const [tokenData, setTokenData] = useState<TokenResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showWhiteboard, setShowWhiteboard] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const backendUrl = useMemo(() => BACKEND_URL.replace(/\/$/, ""), []);
 
@@ -130,12 +132,27 @@ export default function RoomClient({ roomId }: RoomClientProps) {
       dataChannel
     >
       <RoomAudioRenderer />
-      <InRoomLayout />
+      <InRoomLayout
+        showWhiteboard={showWhiteboard}
+        onToggleWhiteboard={() => setShowWhiteboard((v) => !v)}
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+      />
     </LiveKitRoom>
   );
 }
 
-function InRoomLayout() {
+function InRoomLayout({
+  showWhiteboard,
+  onToggleWhiteboard,
+  menuOpen,
+  setMenuOpen,
+}: {
+  showWhiteboard: boolean;
+  onToggleWhiteboard: () => void;
+  menuOpen: boolean;
+  setMenuOpen: (val: boolean) => void;
+}) {
   const connectionState = useConnectionState();
 
   const statusText =
@@ -147,16 +164,40 @@ function InRoomLayout() {
 
   return (
     <div className="grid min-h-screen grid-cols-12 bg-slate-950 text-white">
-      <main className="col-span-12 lg:col-span-9 flex flex-col">
-        <header className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+      <main className="col-span-12 lg:col-span-9 flex flex-col relative">
+        <header className="flex items-center justify-between border-b border-slate-800 px-4 py-3 relative z-20 bg-slate-950">
           <div>
             <p className="text-sm text-slate-400">LiveKit Classroom</p>
             <p className="text-lg font-semibold">Room</p>
           </div>
-          <span className="text-sm text-slate-400">{statusText}</span>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-slate-400">{statusText}</span>
+            <div className="relative">
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 bg-slate-800 text-lg"
+                title="More"
+              >
+                ⋯
+              </button>
+              {menuOpen ? (
+                <div className="absolute right-0 mt-2 w-44 rounded-lg border border-slate-700 bg-slate-800/90 p-2 shadow-lg z-30">
+                  <button
+                    onClick={() => {
+                      onToggleWhiteboard();
+                      setMenuOpen(false);
+                    }}
+                    className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-white hover:bg-slate-700"
+                  >
+                    Whiteboard {showWhiteboard ? "(hide)" : "(show)"}
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </div>
         </header>
         <section className="flex-1 overflow-hidden">
-          <VideoGrid />
+          {showWhiteboard ? <WhiteboardPanel /> : <VideoGrid />}
         </section>
         <footer className="border-t border-slate-800 px-4 py-3">
           <ControlBar variation="verbose" />
@@ -165,7 +206,6 @@ function InRoomLayout() {
       <aside className="col-span-12 lg:col-span-3 flex flex-col border-l border-slate-800 bg-slate-900/50">
         <ParticipantsPanel />
         <ChatPanel />
-        <WhiteboardPanel />
       </aside>
     </div>
   );

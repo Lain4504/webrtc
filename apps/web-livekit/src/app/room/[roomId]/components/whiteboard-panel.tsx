@@ -13,9 +13,20 @@ const Excalidraw = dynamic(
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
+type WhiteboardPayload = {
+  sender: string;
+  version: number;
+  data: {
+    elements: unknown;
+    appState: unknown;
+    files: unknown;
+  };
+};
+
 export default function WhiteboardPanel() {
   const room = useRoomContext();
-  const [whiteboardState, setWhiteboardState] = useState<string | null>(null);
+  const [whiteboardState, setWhiteboardState] = useState<WhiteboardPayload["data"] | null>(null);
+  const [lastVersion, setLastVersion] = useState<number>(0);
 
   useEffect(() => {
     if (!room) return;
@@ -26,26 +37,37 @@ export default function WhiteboardPanel() {
       topic?: string,
     ) => {
       if (topic && topic !== "whiteboard") return;
-      setWhiteboardState(decoder.decode(payload));
+      try {
+        const parsed = JSON.parse(decoder.decode(payload)) as WhiteboardPayload;
+        if (parsed.sender === room.localParticipant?.identity) return;
+        if (parsed.version <= lastVersion) return;
+        setLastVersion(parsed.version);
+        setWhiteboardState(parsed.data);
+      } catch (error) {
+        console.warn("Whiteboard parse error", error);
+      }
     };
 
     room.on(RoomEvent.DataReceived, handler);
     return () => {
       room.off(RoomEvent.DataReceived, handler);
     };
-  }, [room]);
+  }, [room, lastVersion]);
 
   const handleChange = (elements: unknown, appState: unknown, files: unknown) => {
     if (!room) return;
-    const payload = JSON.stringify({ elements, appState, files });
-    setWhiteboardState(payload);
-    void room.localParticipant?.publishData(encoder.encode(payload), {
+    const payload: WhiteboardPayload = {
+      sender: room.localParticipant?.identity ?? "local",
+      version: Date.now(),
+      data: { elements, appState, files },
+    };
+    setWhiteboardState(payload.data);
+    setLastVersion(payload.version);
+    void room.localParticipant?.publishData(encoder.encode(JSON.stringify(payload)), {
       reliable: true,
       topic: "whiteboard",
     });
   };
-
-  const parsedInitial = whiteboardState ? JSON.parse(whiteboardState) : undefined;
 
   return (
     <div className="flex flex-col border-t border-slate-800">
@@ -56,7 +78,7 @@ export default function WhiteboardPanel() {
       <div className="h-80 overflow-hidden bg-slate-800/60">
         <Excalidraw
           onChange={handleChange}
-          initialData={parsedInitial}
+          initialData={whiteboardState ?? undefined}
           theme="dark"
         />
       </div>

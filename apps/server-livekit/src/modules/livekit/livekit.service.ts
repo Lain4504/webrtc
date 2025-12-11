@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AccessToken, RoomServiceClient } from 'livekit-server-sdk';
+import {
+  AccessToken,
+  RoomServiceClient,
+  TrackSource,
+} from 'livekit-server-sdk';
 
 export type LivekitRole = 'instructor' | 'student';
 
@@ -56,7 +60,13 @@ export class LivekitService {
     token.addGrant({
       roomJoin: true,
       room: input.roomName,
-      canPublish: input.role === 'instructor',
+      canPublish: true,
+      canPublishSources: [
+        TrackSource.CAMERA,
+        TrackSource.MICROPHONE,
+        TrackSource.SCREEN_SHARE,
+        TrackSource.SCREEN_SHARE_AUDIO,
+      ],
       canSubscribe: true,
       canPublishData: true,
       roomCreate: input.role === 'instructor',
