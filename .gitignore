@@ -1,0 +1,58 @@
+# ================================
+# Global dependencies and build
+# ================================
+node_modules
+apps/**/node_modules
+packages/**/node_modules
+
+dist
+apps/**/dist
+packages/**/dist
+
+# NextJS build
+apps/**/.next
+.next/
+out/
+
+# ================================
+# Environment files (NestJS + NextJS)
+# ================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+apps/**/.env
+apps/**/.env.local
+apps/**/.env.*.local
+
+# ================================
+# PnP
+# ================================
+.pnp
+.pnp.js
+
+# ================================
+# Testing
+# ================================
+coverage
+
+# ================================
+# Turbo
+# ================================
+.turbo
+
+# ================================
+# Vercel (NextJS deploy)
+# ================================
+.vercel
+
+# ================================
+# Misc
+# ================================
+build
+out
+npm-debug.log*
+.DS_Store
+*.pem
