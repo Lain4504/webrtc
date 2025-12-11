@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { RoomEvent } from "livekit-client";
-import { useRoomContext } from "@livekit/components-react";
+import { useRoomContext, useLocalParticipant } from "@livekit/components-react";
 
 interface ChatMessage {
   id: string;
@@ -11,51 +10,106 @@ interface ChatMessage {
   at: number;
 }
 
-const decoder = new TextDecoder();
-const encoder = new TextEncoder();
-
 export default function ChatPanel() {
   const room = useRoomContext();
+  const { localParticipant } = useLocalParticipant();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
 
+  // Register text stream handler for receiving messages
   useEffect(() => {
-    if (!room) return;
-    const handler = (
-      payload: Uint8Array,
-      participant: { identity: string; name?: string },
-      _kind: unknown,
-      topic?: string,
-    ) => {
-      if (topic && topic !== "chat") return;
-      try {
-        const parsed = JSON.parse(decoder.decode(payload)) as ChatMessage;
-        setMessages((prev) => [...prev, parsed]);
-      } catch (error) {
-        console.warn("Failed to parse chat payload", error);
-      }
-    };
+    if (!room || !localParticipant) return;
 
-    room.on(RoomEvent.DataReceived, handler);
-    return () => {
-      room.off(RoomEvent.DataReceived, handler);
-    };
-  }, [room]);
+    // Check if registerTextStreamHandler is available (newer API)
+    if (
+      typeof localParticipant.registerTextStreamHandler === "function"
+    ) {
+      const unregister = localParticipant.registerTextStreamHandler(
+        "chat",
+        async (reader, participantInfo) => {
+          try {
+            // Read all text from the stream
+            const text = await reader.readAll();
+            const message: ChatMessage = {
+              id: reader.info.id,
+              text,
+              sender: participantInfo.name || participantInfo.identity || "Unknown",
+              at: reader.info.timestamp,
+            };
+            setMessages((prev) => [...prev, message]);
+          } catch (error) {
+            console.warn("Failed to read chat message", error);
+          }
+        },
+      );
+
+      return () => {
+        if (typeof unregister === "function") {
+          unregister();
+        }
+      };
+    } else {
+      // Fallback to data packets for older SDK versions
+      const decoder = new TextDecoder();
+      const handler = (
+        payload: Uint8Array,
+        participant: { identity: string; name?: string },
+        _kind: unknown,
+        topic?: string,
+      ) => {
+        if (topic && topic !== "chat") return;
+        try {
+          const parsed = JSON.parse(decoder.decode(payload)) as ChatMessage;
+          setMessages((prev) => [...prev, parsed]);
+        } catch (error) {
+          console.warn("Failed to parse chat payload", error);
+        }
+      };
+
+      room.on("dataReceived" as any, handler);
+      return () => {
+        room.off("dataReceived" as any, handler);
+      };
+    }
+  }, [room, localParticipant]);
 
   const sendMessage = async () => {
-    if (!room || !draft.trim()) return;
-    const message: ChatMessage = {
-      id: crypto.randomUUID(),
-      text: draft.trim(),
-      sender: room.localParticipant?.name || room.localParticipant?.identity || "Me",
-      at: Date.now(),
-    };
+    if (!room || !localParticipant || !draft.trim()) return;
+
+    const messageText = draft.trim();
+    const senderName =
+      localParticipant.name || localParticipant.identity || "Me";
+
     try {
-      await room.localParticipant?.publishData(
-        encoder.encode(JSON.stringify(message)),
-        { reliable: true, topic: "chat" },
-      );
-      setMessages((prev) => [...prev, message]);
+      // Try using sendText API (newer, better for long messages)
+      if (typeof localParticipant.sendText === "function") {
+        await localParticipant.sendText(messageText, {
+          topic: "chat",
+        });
+
+        // Add message to local state immediately for better UX
+        const message: ChatMessage = {
+          id: crypto.randomUUID(),
+          text: messageText,
+          sender: senderName,
+          at: Date.now(),
+        };
+        setMessages((prev) => [...prev, message]);
+      } else {
+        // Fallback to data packets for older SDK versions
+        const encoder = new TextEncoder();
+        const message: ChatMessage = {
+          id: crypto.randomUUID(),
+          text: messageText,
+          sender: senderName,
+          at: Date.now(),
+        };
+        await localParticipant.publishData(
+          encoder.encode(JSON.stringify(message)),
+          { reliable: true, topic: "chat" },
+        );
+        setMessages((prev) => [...prev, message]);
+      }
       setDraft("");
     } catch (error) {
       console.warn("Failed to send chat message", error);

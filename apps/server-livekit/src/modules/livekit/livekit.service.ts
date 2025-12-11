@@ -69,6 +69,7 @@ export class LivekitService {
       ],
       canSubscribe: true,
       canPublishData: true,
+      canUpdateOwnMetadata: true,
       roomCreate: input.role === 'instructor',
       roomAdmin: input.role === 'instructor',
     });

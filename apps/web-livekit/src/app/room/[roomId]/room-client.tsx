@@ -1,18 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   ControlBar,
   LiveKitRoom,
   RoomAudioRenderer,
   useConnectionState,
+  useLocalParticipant,
+  useRoomContext,
 } from "@livekit/components-react";
-import { ConnectionState } from "livekit-client";
+import { ConnectionState, RoomEvent } from "livekit-client";
 import { BACKEND_URL, DEFAULT_WS_URL } from "@/lib/config";
 import ChatPanel from "./components/chat-panel";
 import ParticipantsPanel from "./components/participants-panel";
+import ScreenShareButton from "./components/screen-share-button";
 import VideoGrid from "./components/video-grid";
 import WhiteboardPanel from "./components/whiteboard-panel";
+import PollPanel from "./components/poll-panel";
+import FileSharingPanel from "./components/file-sharing-panel";
+import ReactionsPanel from "./components/reactions-panel";
+import TimerPanel from "./components/timer-panel";
+import AttendancePanel from "./components/attendance-panel";
 
 type Role = "instructor" | "student";
 
@@ -129,7 +137,10 @@ export default function RoomClient({ roomId }: RoomClientProps) {
       token={tokenData.token}
       serverUrl={tokenData.wsUrl}
       connect
-      dataChannel
+      options={{
+        dynacast: true,
+        adaptiveStream: true,
+      }}
     >
       <RoomAudioRenderer />
       <InRoomLayout
@@ -157,6 +168,99 @@ function InRoomLayout({
   role: Role;
 }) {
   const connectionState = useConnectionState();
+  const { localParticipant } = useLocalParticipant();
+  const room = useRoomContext();
+  const [isHandRaised, setIsHandRaised] = useState(false);
+  const [activeTab, setActiveTab] = useState<"chat" | "polls" | "files" | "attendance">("chat");
+
+  // Sync hand raised state from attributes and data channel
+  useEffect(() => {
+    if (!localParticipant || !room) return;
+
+    const checkHandRaised = () => {
+      const handRaised = localParticipant.attributes?.handRaised === "true";
+      setIsHandRaised(handRaised);
+    };
+
+    // Check initial state from attributes
+    checkHandRaised();
+
+    // Listen to local participant attribute changes
+    const handleAttributeChange = () => {
+      checkHandRaised();
+    };
+
+    localParticipant.on("participantAttributesChanged" as any, handleAttributeChange);
+
+    // Also listen to data channel as fallback
+    const decoder = new TextDecoder();
+    const handleDataReceived = (
+      payload: Uint8Array,
+      participant: { identity: string },
+      _kind: unknown,
+      topic?: string,
+    ) => {
+      if (topic !== "participant-state") return;
+      if (participant.identity !== localParticipant.identity) return;
+
+      try {
+        const message = JSON.parse(decoder.decode(payload)) as {
+          type: string;
+          status: boolean;
+          participantIdentity: string;
+        };
+        if (message.type === "handRaised" && message.participantIdentity === localParticipant.identity) {
+          setIsHandRaised(message.status);
+        }
+      } catch (error) {
+        console.warn("Failed to parse hand raised message", error);
+      }
+    };
+
+    room.on(RoomEvent.DataReceived, handleDataReceived);
+
+    return () => {
+      localParticipant.off("participantAttributesChanged" as any, handleAttributeChange);
+      room.off(RoomEvent.DataReceived, handleDataReceived);
+    };
+  }, [localParticipant, room]);
+
+  const toggleHand = async () => {
+    if (!localParticipant || !room) return;
+    const newStatus = !isHandRaised;
+    
+    // Update local state immediately for better UX
+    setIsHandRaised(newStatus);
+    
+    try {
+      // Try to update attributes first (preferred method)
+      try {
+        await localParticipant.setAttributes({
+          handRaised: newStatus ? "true" : "",
+        });
+        console.log("Hand raised status updated via attributes:", newStatus);
+      } catch (attrError) {
+        // Fallback: use data channel if attributes don't work
+        console.warn("Attributes update failed, using data channel fallback:", attrError);
+        const encoder = new TextEncoder();
+        const message = {
+          type: "handRaised",
+          status: newStatus,
+          participantIdentity: localParticipant.identity,
+          participantName: localParticipant.name || localParticipant.identity,
+        };
+        await localParticipant.publishData(
+          encoder.encode(JSON.stringify(message)),
+          { reliable: true, topic: "participant-state" },
+        );
+        console.log("Hand raised status updated via data channel:", newStatus);
+      }
+    } catch (error) {
+      console.error("Failed to update hand raised status", error);
+      // Revert state on error
+      setIsHandRaised(!newStatus);
+    }
+  };
 
   const statusText =
     connectionState === ConnectionState.Connected
@@ -203,12 +307,90 @@ function InRoomLayout({
           {showWhiteboard ? <WhiteboardPanel role={role} /> : <VideoGrid />}
         </section>
         <footer className="border-t border-slate-800 px-4 py-3">
-          <ControlBar variation="verbose" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ControlBar variation="verbose" />
+              <ReactionsPanel />
+              <button
+                onClick={toggleHand}
+                className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                  isHandRaised
+                    ? "bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30 border border-yellow-500/50"
+                    : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
+                }`}
+                title={isHandRaised ? "Lower Hand" : "Raise Hand"}
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0 0V11m0 0V11"
+                  />
+                </svg>
+                <span className="hidden sm:inline">
+                  {isHandRaised ? "Lower Hand" : "Raise Hand"}
+                </span>
+              </button>
+            </div>
+            <ScreenShareButton />
+          </div>
         </footer>
       </main>
       <aside className="col-span-12 lg:col-span-3 flex flex-col border-l border-slate-800 bg-slate-900/50">
         <ParticipantsPanel />
-        <ChatPanel />
+        <AttendancePanel />
+        
+        {/* Tab Navigation */}
+        <div className="flex border-b border-slate-800">
+          <button
+            onClick={() => setActiveTab("chat")}
+            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
+              activeTab === "chat"
+                ? "bg-slate-800 text-white border-b-2 border-blue-500"
+                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+            }`}
+          >
+            Chat
+          </button>
+          <button
+            onClick={() => setActiveTab("polls")}
+            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
+              activeTab === "polls"
+                ? "bg-slate-800 text-white border-b-2 border-blue-500"
+                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+            }`}
+          >
+            Polls
+          </button>
+          <button
+            onClick={() => setActiveTab("files")}
+            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
+              activeTab === "files"
+                ? "bg-slate-800 text-white border-b-2 border-blue-500"
+                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+            }`}
+          >
+            Files
+          </button>
+        </div>
+
+        {/* Tab Content */}
+        <div className="flex-1 overflow-hidden">
+          {activeTab === "chat" && <ChatPanel />}
+          {activeTab === "polls" && <PollPanel />}
+          {activeTab === "files" && <FileSharingPanel />}
+        </div>
+
+        {/* Timer Panel at bottom */}
+        <div className="border-t border-slate-800 p-2">
+          <TimerPanel />
+        </div>
       </aside>
     </div>
   );
