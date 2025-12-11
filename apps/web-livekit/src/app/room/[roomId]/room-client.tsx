@@ -21,6 +21,8 @@ import FileSharingPanel from "./components/file-sharing-panel";
 import ReactionsPanel from "./components/reactions-panel";
 import TimerPanel from "./components/timer-panel";
 import AttendancePanel from "./components/attendance-panel";
+import RecordingPanel from "./components/recording-panel";
+import RecordingsList from "./components/recordings-list";
 
 type Role = "instructor" | "student";
 
@@ -171,7 +173,7 @@ function InRoomLayout({
   const { localParticipant } = useLocalParticipant();
   const room = useRoomContext();
   const [isHandRaised, setIsHandRaised] = useState(false);
-  const [activeTab, setActiveTab] = useState<"chat" | "polls" | "files" | "attendance">("chat");
+  const [activeTab, setActiveTab] = useState<"chat" | "polls" | "files" | "recordings">("chat");
 
   // Sync hand raised state from attributes and data channel
   useEffect(() => {
@@ -278,6 +280,7 @@ function InRoomLayout({
             <p className="text-lg font-semibold">Room</p>
           </div>
           <div className="flex items-center gap-3">
+            <RecordingPanel role={role} />
             <span className="text-sm text-slate-400">{statusText}</span>
             <div className="relative">
               <button
@@ -378,6 +381,16 @@ function InRoomLayout({
           >
             Files
           </button>
+          <button
+            onClick={() => setActiveTab("recordings")}
+            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
+              activeTab === "recordings"
+                ? "bg-slate-800 text-white border-b-2 border-blue-500"
+                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+            }`}
+          >
+            Recordings
+          </button>
         </div>
 
         {/* Tab Content */}
@@ -385,6 +398,7 @@ function InRoomLayout({
           {activeTab === "chat" && <ChatPanel />}
           {activeTab === "polls" && <PollPanel />}
           {activeTab === "files" && <FileSharingPanel />}
+          {activeTab === "recordings" && room && <RecordingsList roomId={room.name} />}
         </div>
 
         {/* Timer Panel at bottom */}

@@ -53,4 +53,32 @@ export class RoomService {
       wsUrl: this.livekitService.getWsUrl(),
     };
   }
+
+  async startRecording(
+    roomId: string,
+    options?: {
+      layout?: string;
+      filepath?: string;
+      s3Config?: {
+        accessKey: string;
+        secret: string;
+        bucket: string;
+        region?: string;
+        endpoint?: string;
+        forcePathStyle?: boolean;
+      };
+    },
+  ): Promise<{ egressId: string }> {
+    const room = this.getRoom(roomId);
+    return this.livekitService.startRecording(room.name, options);
+  }
+
+  async stopRecording(egressId: string): Promise<void> {
+    await this.livekitService.stopRecording(egressId);
+  }
+
+  async listRecordings(roomId?: string): Promise<any[]> {
+    const roomName = roomId ? this.getRoom(roomId).name : undefined;
+    return this.livekitService.listRecordings(roomName);
+  }
 }

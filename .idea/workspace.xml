@@ -4,11 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="whiteboard interaction">
+    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="record features">
+      <change afterPath="$PROJECT_DIR$/apps/server-livekit/ENV_RECORDING.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/server-livekit/ENV_SETUP.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/start-recording.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web-livekit/RECORDING_AUTO_STOP.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/recording-panel.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/recordings-list.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/chat-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/chat-panel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/participants-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/participants-panel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/video-grid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/video-grid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -18,6 +24,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -81,7 +88,7 @@
       <workItem from="1765459914092" duration="1392000" />
       <workItem from="1765462833324" duration="67000" />
       <workItem from="1765464013787" duration="67000" />
-      <workItem from="1765464603298" duration="7025000" />
+      <workItem from="1765464603298" duration="9461000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <option name="closed" value="true" />
@@ -147,7 +154,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765470285040</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="all learning features">
+      <option name="closed" value="true" />
+      <created>1765471934181</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1765471934181</updated>
+    </task>
+    <task id="LOCAL-00010" summary="all learning features">
+      <option name="closed" value="true" />
+      <created>1765472068786</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1765472068786</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +191,9 @@
     <MESSAGE value="create project" />
     <MESSAGE value="camera display" />
     <MESSAGE value="whiteboard interaction" />
-    <option name="LAST_COMMIT_MESSAGE" value="whiteboard interaction" />
+    <MESSAGE value="all learning features" />
+    <MESSAGE value="record features" />
+    <option name="LAST_COMMIT_MESSAGE" value="record features" />
   </component>
   <component name="com.apollographql.ijplugin.settings.ProjectSettingsState">
     <option name="lspPassPathToSuperGraphYaml" value="false" />
