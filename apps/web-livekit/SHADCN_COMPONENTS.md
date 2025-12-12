@@ -38,32 +38,32 @@ Dưới đây là danh sách các shadcn UI components đã được sử dụng
   ```
 
 ### 5. Card (`components/ui/card.tsx`)
-- **Usage**: Được sử dụng trong `page.tsx`, `room-client.tsx`, `chat-panel.tsx`, `participants-panel.tsx`, `poll-panel.tsx`, `recording-panel.tsx`, `timer-panel.tsx`, `attendance-panel.tsx`, `file-sharing-panel.tsx`, `recordings-list.tsx`, `reactions-panel.tsx`
+- **Usage**: Được sử dụng trong nhiều components
 - **Install command**: 
   ```bash
   npx shadcn@latest add card
   ```
 
 ### 6. Badge (`components/ui/badge.tsx`)
-- **Usage**: Được sử dụng trong `room-client.tsx`, `participants-panel.tsx`, `poll-panel.tsx`, `attendance-panel.tsx`, `recordings-list.tsx`
+- **Usage**: Được sử dụng trong nhiều components
 - **Install command**: 
   ```bash
   npx shadcn@latest add badge
   ```
 
-### 7. Tabs (`components/ui/tabs.tsx`)
+### 7. Sheet (`components/ui/sheet.tsx`)
 - **Dependencies**: 
-  - `@radix-ui/react-tabs` (cần cài đặt)
-- **Usage**: Được sử dụng trong `room-client.tsx` cho tab navigation
+  - `@radix-ui/react-dialog` (cần cài đặt - đã có sẵn vì Sheet dùng Dialog)
+- **Usage**: Được sử dụng trong `room-client.tsx` cho các modal panel (chat, participants, settings)
 - **Install command**: 
   ```bash
-  npx shadcn@latest add tabs
+  npx shadcn@latest add sheet
   ```
 
 ### 8. DropdownMenu (`components/ui/dropdown-menu.tsx`)
 - **Dependencies**: 
   - `@radix-ui/react-dropdown-menu` (cần cài đặt)
-- **Usage**: Được sử dụng trong `room-client.tsx` cho menu
+- **Usage**: Được sử dụng trong `room-client.tsx` cho menu options
 - **Install command**: 
   ```bash
   npx shadcn@latest add dropdown-menu
@@ -85,6 +85,24 @@ Dưới đây là danh sách các shadcn UI components đã được sử dụng
   npx shadcn@latest add popover
   ```
 
+### 11. Tabs (`components/ui/tabs.tsx`)
+- **Dependencies**: 
+  - `@radix-ui/react-tabs` (cần cài đặt)
+- **Usage**: Được sử dụng trong `room-client.tsx` để chuyển đổi giữa Chat và Poll trong chat panel
+- **Install command**: 
+  ```bash
+  npx shadcn@latest add tabs
+  ```
+
+### 12. Dialog (`components/ui/dialog.tsx`)
+- **Dependencies**: 
+  - `@radix-ui/react-dialog` (cần cài đặt)
+- **Usage**: Được sử dụng trong `room-client.tsx` cho Settings modal (Recording panel)
+- **Install command**: 
+  ```bash
+  npx shadcn@latest add dialog
+  ```
+
 ## Lưu ý:
 - Các dependencies cần thiết (`@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`) đã có trong `package.json`
 - Các component đã được import và sử dụng trong code, bạn chỉ cần chạy các lệnh install trên để tạo các file component
@@ -102,5 +120,19 @@ Dưới đây là danh sách các shadcn UI components đã được sử dụng
 - FileImage, FileVideo, FileText, FileSpreadsheet, File (file types)
 - Upload (upload file)
 - Loader2 (loading spinner)
+- MessageSquare (chat)
+- Users (participants)
+- Settings (settings)
+- PhoneOff (end call)
+- Smile (reactions)
+- Captions (captions)
+- Send (send message)
 
 Tất cả các icon đã được import từ `lucide-react` và thay thế các SVG inline.
+
+## UI Layout mới:
+- **Layout tối giản**: Video grid ở giữa màn hình, không có sidebar cố định
+- **Toolbar ở dưới cùng**: Chứa tất cả các controls (mic, camera, screen share, reactions, participants, chat, settings, end call)
+- **Modal panels**: Các panel (chat, participants, settings) mở dạng Sheet modal khi click vào icon trong toolbar
+- **Status bar**: Hiển thị thời gian và room ID ở góc dưới trái
+- **Theme màu trắng**: Tất cả components sử dụng theme màu trắng/sáng

@@ -35,7 +35,7 @@ S3_REGION=us-east-1
 
 2. **Production nên dùng S3**: Để lưu trữ lâu dài và dễ truy cập
 
-3. **S3-Compatible Storage**: 
+3. **S3-Compatible Storage**:
    - **Cloudflare R2**: `S3_ENDPOINT=https://account-id.r2.cloudflarestorage.com`, `S3_FORCE_PATH_STYLE=true`, `S3_REGION` không cần thiết (có thể để trống hoặc dùng "auto")
    - MinIO: `S3_ENDPOINT=http://localhost:9000`, `S3_FORCE_PATH_STYLE=true`
    - DigitalOcean Spaces: `S3_ENDPOINT=https://region.digitaloceanspaces.com`, `S3_FORCE_PATH_STYLE=false`

@@ -194,13 +194,22 @@ export class LivekitService {
     const client = this.getEgressClient();
 
     // Check for S3 config from environment variables if not provided
-    const s3AccessKey = options?.s3Config?.accessKey || this.configService.get<string>('S3_ACCESS_KEY');
-    const s3Secret = options?.s3Config?.secret || this.configService.get<string>('S3_SECRET_KEY');
-    const s3Bucket = options?.s3Config?.bucket || this.configService.get<string>('S3_BUCKET');
-    const s3Region = options?.s3Config?.region || this.configService.get<string>('S3_REGION');
-    const s3Endpoint = options?.s3Config?.endpoint || this.configService.get<string>('S3_ENDPOINT');
-    const s3ForcePathStyle = options?.s3Config?.forcePathStyle ?? 
-      (this.configService.get<string>('S3_FORCE_PATH_STYLE') === 'true');
+    const s3AccessKey =
+      options?.s3Config?.accessKey ||
+      this.configService.get<string>('S3_ACCESS_KEY');
+    const s3Secret =
+      options?.s3Config?.secret ||
+      this.configService.get<string>('S3_SECRET_KEY');
+    const s3Bucket =
+      options?.s3Config?.bucket || this.configService.get<string>('S3_BUCKET');
+    const s3Region =
+      options?.s3Config?.region || this.configService.get<string>('S3_REGION');
+    const s3Endpoint =
+      options?.s3Config?.endpoint ||
+      this.configService.get<string>('S3_ENDPOINT');
+    const s3ForcePathStyle =
+      options?.s3Config?.forcePathStyle ??
+      this.configService.get<string>('S3_FORCE_PATH_STYLE') === 'true';
 
     // Configure file output
     let fileOutput: EncodedFileOutput;
@@ -218,11 +227,9 @@ export class LivekitService {
       // Create EncodedFileOutput with S3 output
       // Using type assertion due to protobuf oneof type system
       fileOutput = new EncodedFileOutput({
-        filepath:
-          options?.filepath ||
-          `recordings/${roomName}-{time}.mp4`,
+        filepath: options?.filepath || `recordings/${roomName}-{time}.mp4`,
       });
-      
+
       // Set S3 output using the output property with oneof pattern
       (fileOutput as any).output = {
         case: 's3',
@@ -232,9 +239,7 @@ export class LivekitService {
       // Default: record to file without cloud storage (for local testing)
       // In production, you should configure S3/GCP/Azure via environment variables
       fileOutput = new EncodedFileOutput({
-        filepath:
-          options?.filepath ||
-          `recordings/${roomName}-{time}.mp4`,
+        filepath: options?.filepath || `recordings/${roomName}-{time}.mp4`,
       });
     }
 

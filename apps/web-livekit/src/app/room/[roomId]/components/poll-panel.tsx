@@ -152,22 +152,19 @@ export default function PollPanel() {
   const closedPolls = polls.filter((p) => !p.isActive);
 
   return (
-    <Card className="flex h-80 flex-col overflow-hidden">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-lg">Polls & Quizzes</CardTitle>
-          {isInstructor && (
-            <Button
-              onClick={() => setShowCreateForm(true)}
-              size="sm"
-            >
-              + New Poll
-            </Button>
-          )}
-        </div>
-      </CardHeader>
-      <CardContent className="flex-1 overflow-y-auto space-y-4 p-0">
-        <div className="px-4 py-3 space-y-4">
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold">Polls & Quizzes</h3>
+        {isInstructor && (
+          <Button
+            onClick={() => setShowCreateForm(true)}
+            size="sm"
+          >
+            + New Poll
+          </Button>
+        )}
+      </div>
+      <div className="space-y-4 max-h-96 overflow-y-auto">
           {showCreateForm && (
             <CreatePollForm
               onCreate={createPoll}
@@ -201,9 +198,8 @@ export default function PollPanel() {
                 : "No active polls"}
             </p>
           )}
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

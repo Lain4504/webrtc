@@ -6,6 +6,7 @@ import { RoomEvent } from "livekit-client";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Card } from "@/components/ui/card";
+import { Smile } from "lucide-react";
 
 interface Reaction {
   emoji: string;
@@ -105,15 +106,14 @@ export default function ReactionsPanel() {
   };
 
   return (
-    <div className="relative">
+    <>
       <Popover open={showPanel} onOpenChange={setShowPanel}>
         <PopoverTrigger asChild>
-          <Button variant="outline" title="Reactions">
-            <span className="text-lg">😊</span>
-            <span className="hidden sm:inline ml-2">Reactions</span>
+          <Button variant="ghost" size="icon" className="rounded-full h-11 w-11 sm:h-12 sm:w-12 bg-white/80 hover:bg-white transition-smooth shadow-cloud-sm" title="Phản ứng">
+            <Smile className="h-5 w-5 sm:h-6 sm:w-6" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-3" align="start">
+        <PopoverContent className="w-auto p-3 rounded-2xl shadow-cloud-lg border-gray-200" align="start">
           <div className="grid grid-cols-5 gap-2">
             {REACTION_EMOJIS.map((emoji) => (
               <Button
@@ -124,7 +124,7 @@ export default function ReactionsPanel() {
                   sendReaction(emoji);
                   setShowPanel(false);
                 }}
-                className="text-2xl hover:scale-125 transition-transform h-auto w-auto p-2"
+                className="text-2xl hover:scale-110 transition-smooth h-auto w-auto p-2.5 rounded-xl hover:bg-[hsl(215,18%,95%)]"
                 title={emoji}
               >
                 {emoji}
@@ -134,22 +134,22 @@ export default function ReactionsPanel() {
         </PopoverContent>
       </Popover>
 
-      {/* Display active reactions */}
+      {/* Display active reactions - Meet/Zoom style */}
       {reactions.length > 0 && (
-        <div className="fixed top-20 right-4 z-40 space-y-2 pointer-events-none">
+        <div className="fixed top-20 right-4 z-50 space-y-2 pointer-events-none max-w-sm">
           {reactions.slice(-5).map((reaction, idx) => (
             <Card
               key={`${reaction.timestamp}-${idx}`}
-              className="bg-white/90 backdrop-blur-sm px-4 py-2 shadow-lg animate-bounce-in"
+              className="bg-black/80 backdrop-blur-md px-4 py-3 shadow-xl border border-white/20 rounded-full animate-in slide-in-from-right duration-300"
             >
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">{reaction.emoji}</span>
-                <span className="text-sm">{reaction.participantName}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-3xl animate-bounce">{reaction.emoji}</span>
+                <span className="text-sm font-semibold text-white">{reaction.participantName}</span>
               </div>
             </Card>
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 }

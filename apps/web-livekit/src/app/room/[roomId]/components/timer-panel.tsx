@@ -220,11 +220,9 @@ export default function TimerPanel() {
   const isCritical = timer.remaining <= 10 && timer.remaining > 0;
 
   return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm text-center">Timer</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-3">
+    <div className="flex flex-col items-center">
+      <h3 className="text-sm font-semibold mb-3">Timer</h3>
+      <div className="space-y-3 w-full">
         <div className="text-center">
           <div
             className={`text-4xl font-mono font-bold ${isCritical
@@ -289,7 +287,7 @@ export default function TimerPanel() {
             <AlertDescription className="text-xs animate-pulse">Time's up!</AlertDescription>
           </Alert>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

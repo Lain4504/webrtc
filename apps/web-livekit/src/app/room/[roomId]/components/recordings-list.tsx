@@ -68,22 +68,19 @@ export default function RecordingsList({ roomId }: { roomId: string }) {
   };
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-lg">Recordings</CardTitle>
-          <Button
-            onClick={loadRecordings}
-            variant="ghost"
-            size="sm"
-            disabled={loading}
-          >
-            {loading ? "Loading..." : "Refresh"}
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent className="max-h-64 overflow-y-auto space-y-2 p-0">
-        <div className="px-4 py-3 space-y-2">
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold">Recordings</h3>
+        <Button
+          onClick={loadRecordings}
+          variant="ghost"
+          size="sm"
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Refresh"}
+        </Button>
+      </div>
+      <div className="space-y-2 max-h-64 overflow-y-auto">
           {error && (
             <Alert variant="destructive">
               <AlertDescription className="text-xs">{error}</AlertDescription>
@@ -129,8 +126,7 @@ export default function RecordingsList({ roomId }: { roomId: string }) {
               )}
             </Card>
           ))}
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

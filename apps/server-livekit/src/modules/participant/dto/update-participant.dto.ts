@@ -1,4 +1,10 @@
-import { IsOptional, IsString, IsBoolean, IsObject, ValidateNested } from 'class-validator';
+import {
+  IsOptional,
+  IsString,
+  IsBoolean,
+  IsObject,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 class ParticipantPermissionDto {

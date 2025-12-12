@@ -89,57 +89,63 @@ export default function AttendancePanel() {
   const totalCount = Object.keys(attendance).length;
 
   return (
-    <Card className="border-b border-gray-200 rounded-none">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="text-lg">Attendance</CardTitle>
-            <CardDescription>
-              {presentCount} present / {totalCount} total
-            </CardDescription>
-          </div>
-          {isInstructor && totalCount > 0 && (
-            <Button onClick={exportAttendance} size="sm">
-              Export CSV
-            </Button>
-          )}
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900">Điểm danh</h3>
+          <p className="text-sm text-gray-500 mt-0.5">
+            {presentCount} có mặt / {totalCount} tổng
+          </p>
         </div>
-      </CardHeader>
-      <CardContent className="max-h-64 overflow-y-auto space-y-2">
+        {isInstructor && totalCount > 0 && (
+          <Button
+            onClick={exportAttendance}
+            size="sm"
+            className="rounded-lg shadow-soft transition-smooth"
+          >
+            Xuất CSV
+          </Button>
+        )}
+      </div>
+      <div className="max-h-64 overflow-y-auto space-y-2 scrollbar-thin">
         {Object.values(attendance)
           .sort((a, b) => b.joinedAt - a.joinedAt)
           .map((record) => (
-            <Card key={record.participantIdentity} className="p-3">
+            <Card key={record.participantIdentity} className="p-3 shadow-soft border-gray-100 rounded-lg hover:shadow-soft-md transition-smooth">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
-                    className={`h-2 w-2 rounded-full ${
-                      record.isPresent ? "bg-green-500" : "bg-gray-400"
-                    }`}
+                    className={`h-2 w-2 rounded-full flex-shrink-0 ${record.isPresent ? "bg-green-500" : "bg-gray-300"
+                      }`}
                   />
                   <div>
-                    <p className="text-sm">{record.participantName}</p>
-                    <p className="text-xs text-gray-600">
-                      Joined: {new Date(record.joinedAt).toLocaleTimeString()}
+                    <p className="text-sm font-medium text-gray-900">{record.participantName}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      Tham gia: {new Date(record.joinedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
                 </div>
                 <Badge
                   variant={record.isPresent ? "default" : "secondary"}
-                  className={record.isPresent ? "bg-green-100 text-green-700" : ""}
+                  className={`${record.isPresent
+                      ? "bg-green-50 text-green-700 border-green-200"
+                      : "bg-gray-100 text-gray-600"
+                    } px-2.5 py-1 rounded-full text-xs`}
                 >
-                  {record.isPresent ? "Present" : "Left"}
+                  {record.isPresent ? "Có mặt" : "Đã rời"}
                 </Badge>
               </div>
             </Card>
           ))}
 
         {totalCount === 0 && (
-          <p className="text-sm text-gray-500 text-center py-4">
-            No attendance records yet
-          </p>
+          <div className="flex items-center justify-center py-8">
+            <p className="text-sm text-gray-400 text-center">
+              Chưa có bản ghi điểm danh
+            </p>
+          </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

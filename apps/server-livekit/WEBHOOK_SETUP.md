@@ -53,6 +53,7 @@ LIVEKIT_HTTP_URL=https://your-livekit-server.com
 Để test webhooks trong development, bạn có thể:
 
 #### Option 1: Sử dụng ngrok
+
 ```bash
 # Install ngrok
 npm install -g ngrok
@@ -65,6 +66,7 @@ ngrok http 3000
 ```
 
 #### Option 2: Sử dụng localtunnel
+
 ```bash
 # Install localtunnel
 npm install -g localtunnel
