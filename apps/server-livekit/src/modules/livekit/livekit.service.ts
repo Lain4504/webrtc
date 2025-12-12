@@ -36,7 +36,7 @@ export class LivekitService {
     this.httpUrl = this.configService.getOrThrow<string>('LIVEKIT_HTTP_URL');
   }
 
-  private getRoomClient(): RoomServiceClient {
+  getRoomClientInstance(): RoomServiceClient {
     if (!this.roomClient) {
       this.roomClient = new RoomServiceClient(
         this.httpUrl,
@@ -45,6 +45,10 @@ export class LivekitService {
       );
     }
     return this.roomClient;
+  }
+
+  private getRoomClient(): RoomServiceClient {
+    return this.getRoomClientInstance();
   }
 
   async ensureRoom(roomName: string): Promise<void> {
@@ -89,6 +93,76 @@ export class LivekitService {
 
   getWsUrl(): string {
     return this.wsUrl;
+  }
+
+  // Expose room client for use in other services
+  getRoomClientPublic(): RoomServiceClient {
+    return this.getRoomClientInstance();
+  }
+
+  // Room Management
+  async listRooms() {
+    const client = this.getRoomClient();
+    return client.listRooms();
+  }
+
+  async deleteRoom(roomName: string): Promise<void> {
+    const client = this.getRoomClient();
+    await client.deleteRoom(roomName);
+  }
+
+  // Participant Management
+  async listParticipants(roomName: string) {
+    const client = this.getRoomClient();
+    return client.listParticipants(roomName);
+  }
+
+  async getParticipant(roomName: string, identity: string) {
+    const client = this.getRoomClient();
+    return client.getParticipant(roomName, identity);
+  }
+
+  async updateParticipant(
+    roomName: string,
+    identity: string,
+    options: {
+      metadata?: string;
+      name?: string;
+      permission?: {
+        canSubscribe?: boolean;
+        canPublish?: boolean;
+        canPublishData?: boolean;
+        canPublishSources?: TrackSource[];
+        hidden?: boolean;
+        recorder?: boolean;
+      };
+    },
+  ) {
+    const client = this.getRoomClient();
+    // LiveKit SDK: updateParticipant(room: string, identity: string, metadata?: string, name?: string, permission?: ParticipantPermission)
+    // Note: SDK accepts permission as separate parameter, not nested in options
+    return client.updateParticipant(
+      roomName,
+      identity,
+      options.metadata,
+      options.name,
+      options.permission as any, // Type assertion for permission object
+    );
+  }
+
+  async removeParticipant(roomName: string, identity: string): Promise<void> {
+    const client = this.getRoomClient();
+    await client.removeParticipant(roomName, identity);
+  }
+
+  async mutePublishedTrack(
+    roomName: string,
+    identity: string,
+    trackSid: string,
+    muted: boolean,
+  ): Promise<void> {
+    const client = this.getRoomClient();
+    await client.mutePublishedTrack(roomName, identity, trackSid, muted);
   }
 
   private getEgressClient(): EgressClient {

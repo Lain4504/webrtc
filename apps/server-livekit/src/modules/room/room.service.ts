@@ -81,4 +81,14 @@ export class RoomService {
     const roomName = roomId ? this.getRoom(roomId).name : undefined;
     return this.livekitService.listRecordings(roomName);
   }
+
+  async listRooms() {
+    return this.livekitService.listRooms();
+  }
+
+  async deleteRoom(roomId: string): Promise<void> {
+    const room = this.getRoom(roomId);
+    await this.livekitService.deleteRoom(room.name);
+    this.rooms.delete(roomId);
+  }
 }
