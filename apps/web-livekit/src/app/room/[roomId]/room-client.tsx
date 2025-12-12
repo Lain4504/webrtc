@@ -11,6 +11,15 @@ import {
 } from "@livekit/components-react";
 import { ConnectionState, RoomEvent } from "livekit-client";
 import { BACKEND_URL, DEFAULT_WS_URL } from "@/lib/config";
+import { Hand, MoreVertical } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 import ChatPanel from "./components/chat-panel";
 import ParticipantsPanel from "./components/participants-panel";
 import ScreenShareButton from "./components/screen-share-button";
@@ -89,45 +98,48 @@ export default function RoomClient({ roomId }: RoomClientProps) {
 
   if (!tokenData) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
-        <div className="w-full max-w-md rounded-xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
-          <h1 className="text-2xl font-semibold">Join room: {roomId}</h1>
-          <p className="mt-2 text-sm text-slate-400">
-            Enter your name and role to join the classroom.
-          </p>
-          <div className="mt-4 space-y-3">
-            <label className="block text-sm font-medium text-slate-200">
-              Display name
-              <input
-                className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-white outline-none focus:border-blue-400"
+      <div className="flex min-h-screen items-center justify-center bg-white text-gray-900">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>Join room: {roomId}</CardTitle>
+            <CardDescription>
+              Enter your name and role to join the classroom.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="display-name">Display name</Label>
+              <Input
+                id="display-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
               />
-            </label>
-            <label className="block text-sm font-medium text-slate-200">
-              Role
-              <select
-                className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-white outline-none focus:border-blue-400"
-                value={role}
-                onChange={(e) => setRole(e.target.value as Role)}
-              >
-                <option value="student">Student</option>
-                <option value="instructor">Instructor</option>
-              </select>
-            </label>
-          </div>
-          {error ? (
-            <p className="mt-3 text-sm text-red-400">{error}</p>
-          ) : null}
-          <button
-            onClick={handleJoin}
-            disabled={loading}
-            className="mt-6 flex w-full items-center justify-center rounded-md bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600 disabled:opacity-70"
-          >
-            {loading ? "Connecting..." : "Join Room"}
-          </button>
-        </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="role">Role</Label>
+              <Select value={role} onValueChange={(value) => setRole(value as Role)}>
+                <SelectTrigger id="role">
+                  <SelectValue placeholder="Select role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="student">Student</SelectItem>
+                  <SelectItem value="instructor">Instructor</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            {error ? (
+              <p className="text-sm text-red-600">{error}</p>
+            ) : null}
+            <Button
+              onClick={handleJoin}
+              disabled={loading}
+              className="w-full"
+            >
+              {loading ? "Connecting..." : "Join Room"}
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -272,132 +284,87 @@ function InRoomLayout({
         : "Disconnected";
 
   return (
-    <div className="grid min-h-screen grid-cols-12 bg-slate-950 text-white">
+    <div className="grid min-h-screen grid-cols-12 bg-white text-gray-900">
       <main className="col-span-12 lg:col-span-9 flex flex-col relative">
-        <header className="flex items-center justify-between border-b border-slate-800 px-4 py-3 relative z-20 bg-slate-950">
+        <header className="flex items-center justify-between border-b border-gray-200 px-4 py-3 relative z-20 bg-white">
           <div>
-            <p className="text-sm text-slate-400">LiveKit Classroom</p>
+            <p className="text-sm text-gray-600">LiveKit Classroom</p>
             <p className="text-lg font-semibold">Room</p>
           </div>
           <div className="flex items-center gap-3">
             <RecordingPanel role={role} />
-            <span className="text-sm text-slate-400">{statusText}</span>
-            <div className="relative">
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 bg-slate-800 text-lg"
-                title="More"
-              >
-                ⋯
-              </button>
-              {menuOpen ? (
-                <div className="absolute right-0 mt-2 w-44 rounded-lg border border-slate-700 bg-slate-800/90 p-2 shadow-lg z-30">
-                  <button
-                    onClick={() => {
-                      onToggleWhiteboard();
-                      setMenuOpen(false);
-                    }}
-                    className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-white hover:bg-slate-700"
-                  >
-                    Whiteboard {showWhiteboard ? "(hide)" : "(show)"}
-                  </button>
-                </div>
-              ) : null}
-            </div>
+            <Badge variant="outline">{statusText}</Badge>
+            <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-9 w-9">
+                  <MoreVertical className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => {
+                  onToggleWhiteboard();
+                  setMenuOpen(false);
+                }}>
+                  Whiteboard {showWhiteboard ? "(hide)" : "(show)"}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
         <section className="flex-1 overflow-hidden">
           {showWhiteboard ? <WhiteboardPanel role={role} /> : <VideoGrid />}
         </section>
-        <footer className="border-t border-slate-800 px-4 py-3">
+        <footer className="border-t border-gray-200 px-4 py-3 bg-white">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ControlBar variation="verbose" />
               <ReactionsPanel />
-              <button
+              <Button
                 onClick={toggleHand}
-                className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${isHandRaised
-                    ? "bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30 border border-yellow-500/50"
-                    : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
-                  }`}
+                variant={isHandRaised ? "default" : "outline"}
+                className={isHandRaised ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200 border-yellow-300" : ""}
                 title={isHandRaised ? "Lower Hand" : "Raise Hand"}
               >
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0 0V11m0 0V11"
-                  />
-                </svg>
+                <Hand className="h-5 w-5" />
                 <span className="hidden sm:inline">
                   {isHandRaised ? "Lower Hand" : "Raise Hand"}
                 </span>
-              </button>
+              </Button>
             </div>
             <ScreenShareButton />
           </div>
         </footer>
       </main>
-      <aside className="col-span-12 lg:col-span-3 flex flex-col border-l border-slate-800 bg-slate-900/50">
+      <aside className="col-span-12 lg:col-span-3 flex flex-col border-l border-gray-200 bg-gray-50">
         <ParticipantsPanel />
         <AttendancePanel />
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-800">
-          <button
-            onClick={() => setActiveTab("chat")}
-            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === "chat"
-                ? "bg-slate-800 text-white border-b-2 border-blue-500"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-              }`}
-          >
-            Chat
-          </button>
-          <button
-            onClick={() => setActiveTab("polls")}
-            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === "polls"
-                ? "bg-slate-800 text-white border-b-2 border-blue-500"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-              }`}
-          >
-            Polls
-          </button>
-          <button
-            onClick={() => setActiveTab("files")}
-            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === "files"
-                ? "bg-slate-800 text-white border-b-2 border-blue-500"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-              }`}
-          >
-            Files
-          </button>
-          <button
-            onClick={() => setActiveTab("recordings")}
-            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === "recordings"
-                ? "bg-slate-800 text-white border-b-2 border-blue-500"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-              }`}
-          >
-            Recordings
-          </button>
-        </div>
-
-        {/* Tab Content */}
-        <div className="flex-1 overflow-hidden">
-          {activeTab === "chat" && <ChatPanel />}
-          {activeTab === "polls" && <PollPanel />}
-          {activeTab === "files" && <FileSharingPanel />}
-          {activeTab === "recordings" && room && <RecordingsList roomId={room.name} />}
-        </div>
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as typeof activeTab)} className="flex-1 flex flex-col">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="chat">Chat</TabsTrigger>
+            <TabsTrigger value="polls">Polls</TabsTrigger>
+            <TabsTrigger value="files">Files</TabsTrigger>
+            <TabsTrigger value="recordings">Recordings</TabsTrigger>
+          </TabsList>
+          <div className="flex-1 overflow-hidden">
+            <TabsContent value="chat" className="h-full m-0">
+              <ChatPanel />
+            </TabsContent>
+            <TabsContent value="polls" className="h-full m-0">
+              <PollPanel />
+            </TabsContent>
+            <TabsContent value="files" className="h-full m-0">
+              <FileSharingPanel />
+            </TabsContent>
+            <TabsContent value="recordings" className="h-full m-0">
+              {room && <RecordingsList roomId={room.name} />}
+            </TabsContent>
+          </div>
+        </Tabs>
 
         {/* Timer Panel at bottom */}
-        <div className="border-t border-slate-800 p-2">
+        <div className="border-t border-gray-200 p-2">
           <TimerPanel />
         </div>
       </aside>

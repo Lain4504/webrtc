@@ -229,18 +229,18 @@ export default function WhiteboardPanel({ role = "student" }: WhiteboardPanelPro
   }, [room, isReadOnly]);
 
   return (
-    <div className="flex h-full w-full flex-col bg-slate-900">
-      <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+    <div className="flex h-full w-full flex-col bg-white">
+      <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3">
         <div className="flex items-center gap-3">
-          <h3 className="text-lg font-semibold text-white">Whiteboard</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Whiteboard</h3>
           {isReadOnly && (
-            <span className="rounded-md bg-slate-700 px-2 py-1 text-xs text-slate-300">
+            <span className="rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-700 border border-gray-300">
               View Only
             </span>
           )}
         </div>
         {!isReadOnly && (
-          <span className="text-xs text-slate-400">Instructor Mode</span>
+          <span className="text-xs text-gray-600">Instructor Mode</span>
         )}
       </div>
       <div className="flex-1 overflow-hidden">
@@ -248,7 +248,6 @@ export default function WhiteboardPanel({ role = "student" }: WhiteboardPanelPro
           store={store}
           onMount={handleMount}
           {...({ readOnly: isReadOnly } as any)}
-          inferDarkMode
         />
       </div>
     </div>

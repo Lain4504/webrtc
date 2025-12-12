@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import { useRoomContext, useLocalParticipant } from "@livekit/components-react";
 import { RoomEvent } from "livekit-client";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Card } from "@/components/ui/card";
 
 interface Reaction {
   emoji: string;
@@ -103,48 +106,47 @@ export default function ReactionsPanel() {
 
   return (
     <div className="relative">
-      <button
-        onClick={() => setShowPanel(!showPanel)}
-        className="flex items-center gap-2 rounded-md bg-slate-800 px-3 py-2 text-sm font-medium text-white hover:bg-slate-700 border border-slate-700"
-        title="Reactions"
-      >
-        <span className="text-lg">😊</span>
-        <span className="hidden sm:inline">Reactions</span>
-      </button>
-
-      {showPanel && (
-        <div className="absolute bottom-full left-0 mb-2 bg-slate-800 rounded-lg p-3 shadow-xl border border-slate-700 z-50">
+      <Popover open={showPanel} onOpenChange={setShowPanel}>
+        <PopoverTrigger asChild>
+          <Button variant="outline" title="Reactions">
+            <span className="text-lg">😊</span>
+            <span className="hidden sm:inline ml-2">Reactions</span>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-3" align="start">
           <div className="grid grid-cols-5 gap-2">
             {REACTION_EMOJIS.map((emoji) => (
-              <button
+              <Button
                 key={emoji}
+                variant="ghost"
+                size="icon"
                 onClick={() => {
                   sendReaction(emoji);
                   setShowPanel(false);
                 }}
-                className="text-2xl hover:scale-125 transition-transform p-2 rounded hover:bg-slate-700"
+                className="text-2xl hover:scale-125 transition-transform h-auto w-auto p-2"
                 title={emoji}
               >
                 {emoji}
-              </button>
+              </Button>
             ))}
           </div>
-        </div>
-      )}
+        </PopoverContent>
+      </Popover>
 
       {/* Display active reactions */}
       {reactions.length > 0 && (
         <div className="fixed top-20 right-4 z-40 space-y-2 pointer-events-none">
           {reactions.slice(-5).map((reaction, idx) => (
-            <div
+            <Card
               key={`${reaction.timestamp}-${idx}`}
-              className="bg-slate-800/90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg animate-bounce-in"
+              className="bg-white/90 backdrop-blur-sm px-4 py-2 shadow-lg animate-bounce-in"
             >
               <div className="flex items-center gap-2">
                 <span className="text-2xl">{reaction.emoji}</span>
-                <span className="text-sm text-white">{reaction.participantName}</span>
+                <span className="text-sm">{reaction.participantName}</span>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}

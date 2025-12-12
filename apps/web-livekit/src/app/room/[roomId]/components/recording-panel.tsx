@@ -4,6 +4,11 @@ import { useState, useEffect, useCallback } from "react";
 import { useRoomContext, useLocalParticipant, useConnectionState } from "@livekit/components-react";
 import { ConnectionState, RoomEvent } from "livekit-client";
 import { BACKEND_URL } from "@/lib/config";
+import { Circle, CircleDot, Loader2 } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface RecordingInfo {
   egressId: string;
@@ -233,9 +238,11 @@ export default function RecordingPanel({ role: roleProp }: RecordingPanelProps =
   // Wait for localParticipant to be ready, but if roleProp says instructor, show panel anyway
   if (!localParticipant && !roleProp) {
     return (
-      <div className="flex items-center gap-2 rounded-md bg-slate-800/50 px-3 py-2 text-xs text-slate-500">
-        Loading...
-      </div>
+      <Card>
+        <CardContent className="p-3">
+          <p className="text-xs text-gray-600">Loading...</p>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -245,10 +252,10 @@ export default function RecordingPanel({ role: roleProp }: RecordingPanelProps =
       return null; // Don't show anything if no recording is active
     }
     return (
-      <div className="flex items-center gap-2 rounded-md bg-slate-800/50 px-3 py-2 text-sm text-slate-400">
+      <Alert className="bg-gray-100 border-gray-300">
         <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-        <span>Recording in progress...</span>
-      </div>
+        <AlertDescription>Recording in progress...</AlertDescription>
+      </Alert>
     );
   }
 
@@ -277,89 +284,60 @@ export default function RecordingPanel({ role: roleProp }: RecordingPanelProps =
   }
 
   return (
-    <div className="flex flex-col gap-2 p-3 bg-slate-800/50 rounded-lg border border-slate-700 min-w-[200px] z-50">
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-white">Recording</h3>
-        {hasActiveRecording && (
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-xs text-red-400 font-mono">
-              {formatTime(recordingTime)}
-            </span>
-          </div>
-        )}
-      </div>
-
-      {error && (
-        <p className="text-xs text-red-400 bg-red-500/10 px-2 py-1 rounded">
-          {error}
-        </p>
-      )}
-
-      <div className="flex gap-2">
-        {!hasActiveRecording ? (
-          <button
-            onClick={startRecording}
-            className="flex-1 flex items-center justify-center gap-2 rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-600 transition-colors"
-          >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-              />
-            </svg>
-            Start Recording
-          </button>
-        ) : (
-          <button
-            onClick={stopRecording}
-            disabled={!currentEgressId}
-            className="flex-1 flex items-center justify-center gap-2 rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 10h6v4H9z"
-              />
-            </svg>
-            Stop Recording
-          </button>
-        )}
-      </div>
-
-      {hasActiveRecording && (
-        <div className="text-xs text-slate-400 text-center space-y-1">
-          <p>Recording will be saved automatically when stopped</p>
-          <p className="text-slate-500">
-            Auto-stops when room ends or connection lost
-          </p>
-          {currentEgressId && (
-            <p className="text-slate-600 text-[10px] font-mono">
-              ID: {currentEgressId.slice(0, 8)}...
-            </p>
+    <Card className="min-w-[200px] z-50">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm">Recording</CardTitle>
+          {hasActiveRecording && (
+            <Badge variant="destructive" className="gap-2">
+              <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="font-mono">{formatTime(recordingTime)}</span>
+            </Badge>
           )}
         </div>
-      )}
-    </div>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {error && (
+          <Alert variant="destructive">
+            <AlertDescription className="text-xs">{error}</AlertDescription>
+          </Alert>
+        )}
+
+        {!hasActiveRecording ? (
+          <Button
+            onClick={startRecording}
+            variant="destructive"
+            className="w-full"
+          >
+            <Circle className="h-4 w-4 mr-2" />
+            Start Recording
+          </Button>
+        ) : (
+          <Button
+            onClick={stopRecording}
+            disabled={!currentEgressId}
+            variant="destructive"
+            className="w-full"
+          >
+            <CircleDot className="h-4 w-4 mr-2" />
+            Stop Recording
+          </Button>
+        )}
+
+        {hasActiveRecording && (
+          <CardDescription className="text-xs text-center space-y-1">
+            <p>Recording will be saved automatically when stopped</p>
+            <p className="text-gray-500">
+              Auto-stops when room ends or connection lost
+            </p>
+            {currentEgressId && (
+              <p className="text-gray-400 text-[10px] font-mono">
+                ID: {currentEgressId.slice(0, 8)}...
+              </p>
+            )}
+          </CardDescription>
+        )}
+      </CardContent>
+    </Card>
   );
 }

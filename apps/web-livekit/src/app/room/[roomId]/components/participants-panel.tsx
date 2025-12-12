@@ -1,24 +1,29 @@
 import { useParticipants, useParticipantInfo, useTracks } from "@livekit/components-react";
 import { ConnectionQuality, Track } from "livekit-client";
+import { Hand, Mic, MicOff, Video, VideoOff, Wifi, WifiOff, AlertCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function ParticipantsPanel() {
   const participants = useParticipants();
 
   return (
-    <div className="border-b border-slate-800 p-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white">Participants</h3>
-        <span className="text-sm text-slate-400">{participants.length}</span>
-      </div>
-      <ul className="mt-3 space-y-2">
+    <Card className="border-b border-gray-200 rounded-none">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg">Participants</CardTitle>
+          <Badge variant="secondary">{participants.length}</Badge>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-2">
         {participants.map((p) => (
           <ParticipantItem key={p.identity} participant={p} />
         ))}
         {participants.length === 0 ? (
-          <li className="text-sm text-slate-500">Waiting for others...</li>
+          <p className="text-sm text-gray-500 text-center py-2">Waiting for others...</p>
         ) : null}
-      </ul>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -43,106 +48,54 @@ function ParticipantItem({ participant }: ParticipantItemProps) {
 
   const role = metadata ? JSON.parse(metadata)?.role : "student";
 
-  let connectionColor = "text-green-500";
+  let ConnectionIcon = Wifi;
+  let connectionColor = "text-green-600";
   if (connectionQuality === ConnectionQuality.Poor) {
-    connectionColor = "text-red-500";
+    ConnectionIcon = WifiOff;
+    connectionColor = "text-red-600";
   } else if (connectionQuality === ConnectionQuality.Excellent) {
-    connectionColor = "text-green-500";
+    ConnectionIcon = Wifi;
+    connectionColor = "text-green-600";
   }
 
   return (
-    <li className="flex items-center justify-between rounded-md bg-slate-800/50 px-3 py-2 text-sm text-slate-200">
-      <div className="flex items-center gap-2">
-        <div title={`Connection: ${(ConnectionQuality as any)[connectionQuality]}`}>
-          <svg className={`h-3 w-3 ${connectionColor}`} viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h2v2h-2zm0-10h2v8h-2z" />
-          </svg>
+    <Card className="p-3">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div title={`Connection: ${(ConnectionQuality as any)[connectionQuality]}`}>
+            {connectionQuality === ConnectionQuality.Poor ? (
+              <AlertCircle className={`h-3 w-3 ${connectionColor}`} />
+            ) : (
+              <ConnectionIcon className={`h-3 w-3 ${connectionColor}`} />
+            )}
+          </div>
+          <span className="text-sm">{name || identity}</span>
+          {role === "instructor" && (
+            <Badge variant="default" className="bg-blue-100 text-blue-700">Instructor</Badge>
+          )}
+          {isSpeaking && (
+            <Badge variant="default" className="bg-green-100 text-green-700">Speaking</Badge>
+          )}
+          {handRaised && (
+            <Badge variant="outline" className="bg-yellow-100 text-yellow-700 border-yellow-300">
+              <Hand className="h-3 w-3 mr-1" />
+              Hand Raised
+            </Badge>
+          )}
         </div>
-        <span>{name || identity}</span>
-        {role === "instructor" && (
-          <span className="rounded-full bg-blue-500 px-2 py-0.5 text-xs">
-            Instructor
-          </span>
-        )}
-        {isSpeaking && (
-          <span className="rounded-full bg-green-500 px-2 py-0.5 text-xs">
-            Speaking
-          </span>
-        )}
-        {handRaised && (
-          <span className="flex items-center gap-1 rounded-full bg-yellow-500/20 px-2 py-0.5 text-xs text-yellow-400 border border-yellow-500/50">
-            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11"
-              />
-            </svg>
-            Hand Raised
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {audioTrack?.publication?.isMuted ? (
+            <MicOff className="h-4 w-4 text-red-600" />
+          ) : (
+            <Mic className="h-4 w-4 text-green-600" />
+          )}
+          {videoTrack?.publication?.isMuted ? (
+            <VideoOff className="h-4 w-4 text-red-600" />
+          ) : (
+            <Video className="h-4 w-4 text-green-600" />
+          )}
+        </div>
       </div>
-      <div className="flex items-center gap-2">
-        {audioTrack?.publication?.isMuted ? (
-          <svg
-            className="h-4 w-4 text-red-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a4 4 0 01-4-4V6a4 4 0 014-4v2a2 2 0 002 2h2a2 2 0 002-2v-.5M12 18V6"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="h-4 w-4 text-green-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a4 4 0 01-4-4V6a4 4 0 014-4v2a2 2 0 002 2h2a2 2 0 002-2v-.5"
-            />
-          </svg>
-        )}
-        {videoTrack?.publication?.isMuted ? (
-          <svg
-            className="h-4 w-4 text-red-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 12V6a2 2 0 012-2h4a2 2 0 012 2v6m-6 0h6m-6 0H6m6 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m6 0H4"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="h-4 w-4 text-green-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 12V6a2 2 0 012-2h4a2 2 0 012 2v6m-6 0h6m-6 0H6m6 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m6 0H4"
-            />
-          </svg>
-        )}
-      </div>
-    </li>
+    </Card>
   );
 }

@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "@/lib/config";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface RecordingItem {
   egressId: string;
@@ -52,76 +56,81 @@ export default function RecordingsList({ roomId }: { roomId: string }) {
     switch (status.toLowerCase()) {
       case "egress_active":
       case "egress_starting":
-        return "text-green-400";
+        return "bg-green-100 text-green-700";
       case "egress_complete":
-        return "text-blue-400";
+        return "bg-blue-100 text-blue-700";
       case "egress_failed":
       case "egress_aborted":
-        return "text-red-400";
+        return "bg-red-100 text-red-700";
       default:
-        return "text-slate-400";
+        return "bg-gray-100 text-gray-700";
     }
   };
 
   return (
-    <div className="flex flex-col border-b border-slate-800">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
-        <h3 className="text-lg font-semibold text-white">Recordings</h3>
-        <button
-          onClick={loadRecordings}
-          className="text-xs text-blue-400 hover:text-blue-300"
-          disabled={loading}
-        >
-          {loading ? "Loading..." : "Refresh"}
-        </button>
-      </div>
-
-      <div className="max-h-64 overflow-y-auto px-4 py-3 space-y-2">
-        {error && (
-          <p className="text-xs text-red-400 bg-red-500/10 px-2 py-1 rounded">
-            {error}
-          </p>
-        )}
-
-        {recordings.length === 0 && !loading && (
-          <p className="text-sm text-slate-500 text-center py-4">
-            No recordings available yet
-          </p>
-        )}
-
-        {recordings.map((recording) => (
-          <div
-            key={recording.egressId}
-            className="rounded-md bg-slate-800/50 px-3 py-2 text-sm"
+    <Card className="flex flex-col">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg">Recordings</CardTitle>
+          <Button
+            onClick={loadRecordings}
+            variant="ghost"
+            size="sm"
+            disabled={loading}
           >
-            <div className="flex items-center justify-between mb-1">
-              <span
-                className={`text-xs font-medium ${getStatusColor(recording.status)}`}
-              >
-                {recording.status.replace("EGRESS_", "").replace("_", " ")}
-              </span>
-              <span className="text-xs text-slate-400">
-                {formatDate(recording.startedAt)}
-              </span>
-            </div>
-            {recording.filepath && (
-              <p className="text-xs text-slate-400 truncate">
-                {recording.filepath}
-              </p>
-            )}
-            {recording.url && (
-              <a
-                href={recording.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-blue-400 hover:text-blue-300 mt-1 inline-block"
-              >
-                View Recording →
-              </a>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+            {loading ? "Loading..." : "Refresh"}
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent className="max-h-64 overflow-y-auto space-y-2 p-0">
+        <div className="px-4 py-3 space-y-2">
+          {error && (
+            <Alert variant="destructive">
+              <AlertDescription className="text-xs">{error}</AlertDescription>
+            </Alert>
+          )}
+
+          {recordings.length === 0 && !loading && (
+            <p className="text-sm text-gray-500 text-center py-4">
+              No recordings available yet
+            </p>
+          )}
+
+          {recordings.map((recording) => (
+            <Card key={recording.egressId} className="p-3">
+              <div className="flex items-center justify-between mb-1">
+                <Badge className={getStatusColor(recording.status)}>
+                  {recording.status.replace("EGRESS_", "").replace("_", " ")}
+                </Badge>
+                <span className="text-xs text-gray-600">
+                  {formatDate(recording.startedAt)}
+                </span>
+              </div>
+              {recording.filepath && (
+                <CardDescription className="text-xs truncate mt-1">
+                  {recording.filepath}
+                </CardDescription>
+              )}
+              {recording.url && (
+                <Button
+                  variant="link"
+                  size="sm"
+                  className="h-auto p-0 mt-1"
+                  asChild
+                >
+                  <a
+                    href={recording.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Recording →
+                  </a>
+                </Button>
+              )}
+            </Card>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

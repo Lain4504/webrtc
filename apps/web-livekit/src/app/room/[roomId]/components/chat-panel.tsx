@@ -2,6 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRoomContext, useLocalParticipant } from "@livekit/components-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface ChatMessage {
   id: string;
@@ -122,46 +126,47 @@ export default function ChatPanel() {
   );
 
   return (
-    <div className="flex h-80 flex-col border-b border-slate-800">
-      <div className="flex items-center justify-between px-4 py-3">
-        <h3 className="text-lg font-semibold text-white">Chat</h3>
-        <span className="text-xs text-slate-500">
-          {sortedMessages.length} message{sortedMessages.length === 1 ? "" : "s"}
-        </span>
-      </div>
-      <div className="flex-1 space-y-2 overflow-y-auto px-4 pb-4">
-        {sortedMessages.map((m) => (
-          <div key={m.id} className="rounded-md bg-slate-800/60 px-3 py-2 text-sm text-slate-100">
-            <div className="text-xs text-slate-400">
-              {m.sender} • {new Date(m.at).toLocaleTimeString()}
-            </div>
-            <p className="mt-1">{m.text}</p>
-          </div>
-        ))}
-        {sortedMessages.length === 0 ? (
-          <p className="text-sm text-slate-500">No messages yet.</p>
-        ) : null}
-      </div>
-      <div className="flex items-center gap-2 border-t border-slate-800 bg-slate-900/80 px-3 py-2">
-        <input
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              void sendMessage();
-            }
-          }}
-          placeholder="Type a message"
-          className="flex-1 rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-blue-400"
-        />
-        <button
-          onClick={() => void sendMessage()}
-          className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-600"
-        >
-          Send
-        </button>
-      </div>
-    </div>
+    <Card className="flex h-80 flex-col">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg">Chat</CardTitle>
+          <Badge variant="secondary">
+            {sortedMessages.length} message{sortedMessages.length === 1 ? "" : "s"}
+          </Badge>
+        </div>
+      </CardHeader>
+      <CardContent className="flex-1 flex flex-col p-0">
+        <div className="flex-1 space-y-2 overflow-y-auto px-4 pb-4">
+          {sortedMessages.map((m) => (
+            <Card key={m.id} className="p-3">
+              <div className="text-xs text-gray-600 mb-1">
+                {m.sender} • {new Date(m.at).toLocaleTimeString()}
+              </div>
+              <p className="text-sm">{m.text}</p>
+            </Card>
+          ))}
+          {sortedMessages.length === 0 ? (
+            <p className="text-sm text-gray-500 text-center py-4">No messages yet.</p>
+          ) : null}
+        </div>
+        <div className="flex items-center gap-2 border-t border-gray-200 bg-white px-3 py-2">
+          <Input
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                void sendMessage();
+              }
+            }}
+            placeholder="Type a message"
+            className="flex-1"
+          />
+          <Button onClick={() => void sendMessage()}>
+            Send
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

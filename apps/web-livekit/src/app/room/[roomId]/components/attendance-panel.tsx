@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useParticipants, useLocalParticipant } from "@livekit/components-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 interface AttendanceRecord {
   participantIdentity: string;
@@ -86,63 +89,57 @@ export default function AttendancePanel() {
   const totalCount = Object.keys(attendance).length;
 
   return (
-    <div className="flex flex-col border-b border-slate-800">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
-        <div>
-          <h3 className="text-lg font-semibold text-white">Attendance</h3>
-          <p className="text-xs text-slate-400">
-            {presentCount} present / {totalCount} total
-          </p>
+    <Card className="border-b border-gray-200 rounded-none">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-lg">Attendance</CardTitle>
+            <CardDescription>
+              {presentCount} present / {totalCount} total
+            </CardDescription>
+          </div>
+          {isInstructor && totalCount > 0 && (
+            <Button onClick={exportAttendance} size="sm">
+              Export CSV
+            </Button>
+          )}
         </div>
-        {isInstructor && totalCount > 0 && (
-          <button
-            onClick={exportAttendance}
-            className="rounded-md bg-blue-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-600"
-          >
-            Export CSV
-          </button>
-        )}
-      </div>
-
-      <div className="max-h-64 overflow-y-auto px-4 py-3 space-y-2">
+      </CardHeader>
+      <CardContent className="max-h-64 overflow-y-auto space-y-2">
         {Object.values(attendance)
           .sort((a, b) => b.joinedAt - a.joinedAt)
           .map((record) => (
-            <div
-              key={record.participantIdentity}
-              className="flex items-center justify-between rounded-md bg-slate-800/50 px-3 py-2"
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className={`h-2 w-2 rounded-full ${
-                    record.isPresent ? "bg-green-400" : "bg-slate-500"
-                  }`}
-                />
-                <div>
-                  <p className="text-sm text-white">{record.participantName}</p>
-                  <p className="text-xs text-slate-400">
-                    Joined: {new Date(record.joinedAt).toLocaleTimeString()}
-                  </p>
+            <Card key={record.participantIdentity} className="p-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`h-2 w-2 rounded-full ${
+                      record.isPresent ? "bg-green-500" : "bg-gray-400"
+                    }`}
+                  />
+                  <div>
+                    <p className="text-sm">{record.participantName}</p>
+                    <p className="text-xs text-gray-600">
+                      Joined: {new Date(record.joinedAt).toLocaleTimeString()}
+                    </p>
+                  </div>
                 </div>
+                <Badge
+                  variant={record.isPresent ? "default" : "secondary"}
+                  className={record.isPresent ? "bg-green-100 text-green-700" : ""}
+                >
+                  {record.isPresent ? "Present" : "Left"}
+                </Badge>
               </div>
-              <span
-                className={`text-xs px-2 py-1 rounded ${
-                  record.isPresent
-                    ? "bg-green-500/20 text-green-400"
-                    : "bg-slate-700 text-slate-400"
-                }`}
-              >
-                {record.isPresent ? "Present" : "Left"}
-              </span>
-            </div>
+            </Card>
           ))}
 
         {totalCount === 0 && (
-          <p className="text-sm text-slate-500 text-center py-4">
+          <p className="text-sm text-gray-500 text-center py-4">
             No attendance records yet
           </p>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

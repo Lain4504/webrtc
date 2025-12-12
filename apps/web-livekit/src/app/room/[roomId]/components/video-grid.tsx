@@ -16,7 +16,7 @@ export default function VideoGrid() {
   );
 
   return (
-    <div className="h-full w-full bg-slate-900 p-2">
+    <div className="h-full w-full bg-gray-100 p-2">
       <GridLayout tracks={tracks}>
         <ParticipantTile />
       </GridLayout>

@@ -3,6 +3,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useRoomContext, useLocalParticipant } from "@livekit/components-react";
 import { RoomEvent } from "livekit-client";
+import { Download, FileImage, FileVideo, FileText, FileSpreadsheet, File, Upload } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface SharedFile {
   id: string;
@@ -166,80 +169,80 @@ export default function FileSharingPanel() {
   };
 
   const getFileIcon = (type: string) => {
-    if (type.startsWith("image/")) return "🖼️";
-    if (type.startsWith("video/")) return "🎥";
-    if (type.includes("pdf")) return "📄";
-    if (type.includes("word")) return "📝";
-    if (type.includes("excel") || type.includes("spreadsheet")) return "📊";
-    return "📎";
+    if (type.startsWith("image/")) return <FileImage className="h-6 w-6 text-blue-600" />;
+    if (type.startsWith("video/")) return <FileVideo className="h-6 w-6 text-purple-600" />;
+    if (type.includes("pdf")) return <FileText className="h-6 w-6 text-red-600" />;
+    if (type.includes("word")) return <FileText className="h-6 w-6 text-blue-600" />;
+    if (type.includes("excel") || type.includes("spreadsheet")) return <FileSpreadsheet className="h-6 w-6 text-green-600" />;
+    return <File className="h-6 w-6 text-gray-600" />;
   };
 
   return (
-    <div className="flex h-64 flex-col border-b border-slate-800">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
-        <h3 className="text-lg font-semibold text-white">Shared Files</h3>
-        {isInstructor && (
-          <label className="cursor-pointer rounded-md bg-blue-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-600">
-            <input
-              ref={fileInputRef}
-              type="file"
-              className="hidden"
-              onChange={handleFileSelect}
-              accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.mp4,.mp3,.txt"
-            />
-            + Share File
-          </label>
-        )}
-      </div>
-      <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
-        {files.map((file) => (
-          <div
-            key={file.id}
-            className="flex items-center justify-between rounded-md bg-slate-800/50 px-3 py-2 hover:bg-slate-800/70 transition-colors cursor-pointer"
-            onClick={() => downloadFile(file)}
-          >
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              <span className="text-2xl">{getFileIcon(file.type)}</span>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-white truncate">{file.name}</p>
-                <p className="text-xs text-slate-400">
-                  {formatFileSize(file.size)} • {file.sharedBy} •{" "}
-                  {new Date(file.sharedAt).toLocaleTimeString()}
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                downloadFile(file);
-              }}
-              className="ml-2 text-blue-400 hover:text-blue-300"
-              title="Download"
+    <Card className="flex h-64 flex-col">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg">Shared Files</CardTitle>
+          {isInstructor && (
+            <label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                onChange={handleFileSelect}
+                accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.mp4,.mp3,.txt"
+              />
+              <Button size="sm" asChild>
+                <span className="cursor-pointer flex items-center">
+                  <Upload className="h-3 w-3 mr-1" />
+                  Share File
+                </span>
+              </Button>
+            </label>
+          )}
+        </div>
+      </CardHeader>
+      <CardContent className="flex-1 overflow-y-auto space-y-2 p-0">
+        <div className="px-4 py-3 space-y-2">
+          {files.map((file) => (
+            <Card
+              key={file.id}
+              className="p-3 cursor-pointer hover:bg-gray-50"
+              onClick={() => downloadFile(file)}
             >
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                />
-              </svg>
-            </button>
-          </div>
-        ))}
-        {files.length === 0 && (
-          <p className="text-sm text-slate-500 text-center py-4">
-            {isInstructor
-              ? "Share files with your students"
-              : "No files shared yet"}
-          </p>
-        )}
-      </div>
-    </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  {getFileIcon(file.type)}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm truncate">{file.name}</p>
+                    <p className="text-xs text-gray-600">
+                      {formatFileSize(file.size)} • {file.sharedBy} •{" "}
+                      {new Date(file.sharedAt).toLocaleTimeString()}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    downloadFile(file);
+                  }}
+                  title="Download"
+                >
+                  <Download className="h-5 w-5" />
+                </Button>
+              </div>
+            </Card>
+          ))}
+          {files.length === 0 && (
+            <p className="text-sm text-gray-500 text-center py-4">
+              {isInstructor
+                ? "Share files with your students"
+                : "No files shared yet"}
+            </p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

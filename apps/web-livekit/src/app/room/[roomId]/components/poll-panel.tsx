@@ -3,6 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRoomContext, useLocalParticipant } from "@livekit/components-react";
 import { RoomEvent } from "livekit-client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 interface PollOption {
   id: string;
@@ -148,55 +152,58 @@ export default function PollPanel() {
   const closedPolls = polls.filter((p) => !p.isActive);
 
   return (
-    <div className="flex h-80 flex-col border-b border-slate-800 overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
-        <h3 className="text-lg font-semibold text-white">Polls & Quizzes</h3>
-        {isInstructor && (
-          <button
-            onClick={() => setShowCreateForm(true)}
-            className="rounded-md bg-blue-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-600"
-          >
-            + New Poll
-          </button>
-        )}
-      </div>
+    <Card className="flex h-80 flex-col overflow-hidden">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg">Polls & Quizzes</CardTitle>
+          {isInstructor && (
+            <Button
+              onClick={() => setShowCreateForm(true)}
+              size="sm"
+            >
+              + New Poll
+            </Button>
+          )}
+        </div>
+      </CardHeader>
+      <CardContent className="flex-1 overflow-y-auto space-y-4 p-0">
+        <div className="px-4 py-3 space-y-4">
+          {showCreateForm && (
+            <CreatePollForm
+              onCreate={createPoll}
+              onCancel={() => setShowCreateForm(false)}
+            />
+          )}
 
-      <div className="flex-1 overflow-y-auto px-4 py-3 space-y-4">
-        {showCreateForm && (
-          <CreatePollForm
-            onCreate={createPoll}
-            onCancel={() => setShowCreateForm(false)}
-          />
-        )}
+          {activePolls.map((poll) => (
+            <PollCard
+              key={poll.id}
+              poll={poll}
+              onVote={votePoll}
+              onClose={isInstructor ? closePoll : undefined}
+              currentVote={poll.responses[localParticipant?.identity || ""]}
+            />
+          ))}
 
-        {activePolls.map((poll) => (
-          <PollCard
-            key={poll.id}
-            poll={poll}
-            onVote={votePoll}
-            onClose={isInstructor ? closePoll : undefined}
-            currentVote={poll.responses[localParticipant?.identity || ""]}
-          />
-        ))}
+          {closedPolls.length > 0 && (
+            <div className="mt-4">
+              <h4 className="text-xs font-semibold text-gray-600 mb-2">Closed Polls</h4>
+              {closedPolls.map((poll) => (
+                <PollResultsCard key={poll.id} poll={poll} />
+              ))}
+            </div>
+          )}
 
-        {closedPolls.length > 0 && (
-          <div className="mt-4">
-            <h4 className="text-xs font-semibold text-slate-400 mb-2">Closed Polls</h4>
-            {closedPolls.map((poll) => (
-              <PollResultsCard key={poll.id} poll={poll} />
-            ))}
-          </div>
-        )}
-
-        {polls.length === 0 && !showCreateForm && (
-          <p className="text-sm text-slate-500 text-center py-4">
-            {isInstructor
-              ? "Create a poll to engage your students"
-              : "No active polls"}
-          </p>
-        )}
-      </div>
-    </div>
+          {polls.length === 0 && !showCreateForm && (
+            <p className="text-sm text-gray-500 text-center py-4">
+              {isInstructor
+                ? "Create a poll to engage your students"
+                : "No active polls"}
+            </p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -221,56 +228,52 @@ function CreatePollForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-slate-800/50 rounded-lg p-4 space-y-3">
-      <input
-        type="text"
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-        placeholder="Enter your question..."
-        className="w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-blue-400"
-        required
-      />
-      <div className="space-y-2">
-        {options.map((opt, idx) => (
-          <input
-            key={idx}
+    <Card>
+      <CardContent className="p-4 space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <Input
             type="text"
-            value={opt}
-            onChange={(e) => {
-              const newOptions = [...options];
-              newOptions[idx] = e.target.value;
-              setOptions(newOptions);
-            }}
-            placeholder={`Option ${idx + 1}`}
-            className="w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-blue-400"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder="Enter your question..."
+            required
           />
-        ))}
-        {options.length < 6 && (
-          <button
-            type="button"
-            onClick={() => setOptions([...options, ""])}
-            className="text-xs text-blue-400 hover:text-blue-300"
-          >
-            + Add option
-          </button>
-        )}
-      </div>
-      <div className="flex gap-2">
-        <button
-          type="submit"
-          className="flex-1 rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-600"
-        >
-          Create Poll
-        </button>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="rounded-md bg-slate-700 px-3 py-2 text-sm text-white hover:bg-slate-600"
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
+          <div className="space-y-2">
+            {options.map((opt, idx) => (
+              <Input
+                key={idx}
+                type="text"
+                value={opt}
+                onChange={(e) => {
+                  const newOptions = [...options];
+                  newOptions[idx] = e.target.value;
+                  setOptions(newOptions);
+                }}
+                placeholder={`Option ${idx + 1}`}
+              />
+            ))}
+            {options.length < 6 && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setOptions([...options, ""])}
+              >
+                + Add option
+              </Button>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <Button type="submit" className="flex-1">
+              Create Poll
+            </Button>
+            <Button type="button" variant="outline" onClick={onCancel}>
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -288,61 +291,68 @@ function PollCard({
   const totalVotes = Object.keys(poll.responses).length;
 
   return (
-    <div className="bg-slate-800/50 rounded-lg p-4 space-y-3">
-      <div className="flex items-start justify-between">
-        <h4 className="text-sm font-semibold text-white flex-1">{poll.question}</h4>
-        {onClose && (
-          <button
-            onClick={() => onClose(poll.id)}
-            className="text-xs text-red-400 hover:text-red-300"
-          >
-            Close
-          </button>
-        )}
-      </div>
-      <div className="space-y-2">
+    <Card>
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between">
+          <CardTitle className="text-sm flex-1">{poll.question}</CardTitle>
+          {onClose && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onClose(poll.id)}
+              className="text-xs text-red-600 hover:text-red-700 h-auto p-0"
+            >
+              Close
+            </Button>
+          )}
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-2">
         {poll.options.map((option) => {
           const isSelected = currentVote === option.id;
           const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
 
           return (
-            <button
+            <Button
               key={option.id}
               onClick={() => !currentVote && onVote(poll.id, option.id)}
               disabled={!!currentVote}
-              className={`w-full text-left rounded-md px-3 py-2 text-sm transition-colors ${isSelected
-                  ? "bg-blue-500/20 border-2 border-blue-500"
-                  : currentVote
-                    ? "bg-slate-700/50 border border-slate-600"
-                    : "bg-slate-700 border border-slate-600 hover:bg-slate-600"
+              variant={isSelected ? "default" : currentVote ? "outline" : "outline"}
+              className={`w-full text-left justify-start h-auto py-2 ${isSelected
+                  ? "bg-blue-100 border-2 border-blue-500 text-blue-700"
+                  : ""
                 }`}
             >
-              <div className="flex items-center justify-between mb-1">
-                <span className={isSelected ? "text-blue-300 font-medium" : "text-slate-200"}>
-                  {option.text}
-                </span>
-                {currentVote && (
-                  <span className="text-xs text-slate-400">
-                    {option.votes} votes ({percentage.toFixed(0)}%)
+              <div className="w-full">
+                <div className="flex items-center justify-between mb-1">
+                  <span className={isSelected ? "font-medium" : ""}>
+                    {option.text}
                   </span>
+                  {currentVote && (
+                    <Badge variant="secondary" className="text-xs">
+                      {option.votes} votes ({percentage.toFixed(0)}%)
+                    </Badge>
+                  )}
+                </div>
+                {currentVote && (
+                  <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                    <div
+                      className="bg-blue-500 h-1.5 rounded-full transition-all"
+                      style={{ width: `${percentage}%` }}
+                    />
+                  </div>
                 )}
               </div>
-              {currentVote && (
-                <div className="w-full bg-slate-700 rounded-full h-1.5">
-                  <div
-                    className="bg-blue-500 h-1.5 rounded-full transition-all"
-                    style={{ width: `${percentage}%` }}
-                  />
-                </div>
-              )}
-            </button>
+            </Button>
           );
         })}
-      </div>
+      </CardContent>
       {currentVote && (
-        <p className="text-xs text-slate-400">Total votes: {totalVotes}</p>
+        <CardDescription className="px-6 pb-4 text-xs">
+          Total votes: {totalVotes}
+        </CardDescription>
       )}
-    </div>
+    </Card>
   );
 }
 
@@ -351,20 +361,22 @@ function PollResultsCard({ poll }: { poll: Poll }) {
   const maxVotes = Math.max(...poll.options.map((opt) => opt.votes), 0);
 
   return (
-    <div className="bg-slate-800/30 rounded-lg p-3 space-y-2">
-      <h4 className="text-xs font-semibold text-slate-300">{poll.question}</h4>
-      <div className="space-y-1.5">
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xs">{poll.question}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-1.5">
         {poll.options.map((option) => {
           const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
           return (
             <div key={option.id} className="space-y-1">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">{option.text}</span>
-                <span className="text-slate-500">
+                <span>{option.text}</span>
+                <Badge variant="secondary" className="text-xs">
                   {option.votes} ({percentage.toFixed(0)}%)
-                </span>
+                </Badge>
               </div>
-              <div className="w-full bg-slate-700 rounded-full h-1">
+              <div className="w-full bg-gray-200 rounded-full h-1">
                 <div
                   className="bg-blue-500 h-1 rounded-full"
                   style={{ width: `${percentage}%` }}
@@ -373,8 +385,10 @@ function PollResultsCard({ poll }: { poll: Poll }) {
             </div>
           );
         })}
-      </div>
-      <p className="text-xs text-slate-500">Total: {totalVotes} votes</p>
-    </div>
+      </CardContent>
+      <CardDescription className="px-6 pb-4 text-xs">
+        Total: {totalVotes} votes
+      </CardDescription>
+    </Card>
   );
 }

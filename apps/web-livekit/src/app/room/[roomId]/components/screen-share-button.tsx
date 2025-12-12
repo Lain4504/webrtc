@@ -3,6 +3,8 @@
 import { useLocalParticipant } from "@livekit/components-react";
 import { useState, useEffect } from "react";
 import { Track } from "livekit-client";
+import { Monitor, MonitorOff, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function ScreenShareButton() {
   const { localParticipant } = useLocalParticipant();
@@ -57,52 +59,28 @@ export default function ScreenShareButton() {
   };
 
   return (
-    <button
+    <Button
       onClick={handleToggleScreenShare}
       disabled={isLoading}
-      className="flex items-center gap-2 rounded-md bg-slate-700 px-3 py-2 text-sm font-medium text-white hover:bg-slate-600 disabled:opacity-50"
+      variant="outline"
       title={isSharing ? "Stop sharing screen" : "Share screen"}
     >
       {isLoading ? (
         <>
-          <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+          <Loader2 className="h-4 w-4 animate-spin" />
           <span>Loading...</span>
         </>
       ) : isSharing ? (
         <>
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            />
-          </svg>
+          <MonitorOff className="h-4 w-4" />
           <span>Stop Sharing</span>
         </>
       ) : (
         <>
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            />
-          </svg>
+          <Monitor className="h-4 w-4" />
           <span>Share Screen</span>
         </>
       )}
-    </button>
+    </Button>
   );
 }

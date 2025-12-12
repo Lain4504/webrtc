@@ -3,6 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useRoomContext, useLocalParticipant } from "@livekit/components-react";
 import { RoomEvent } from "livekit-client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface TimerState {
   isRunning: boolean;
@@ -216,70 +220,76 @@ export default function TimerPanel() {
   const isCritical = timer.remaining <= 10 && timer.remaining > 0;
 
   return (
-    <div className="flex flex-col items-center gap-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-      <div className="text-center">
-        <h3 className="text-sm font-semibold text-slate-400 mb-2">Timer</h3>
-        <div
-          className={`text-4xl font-mono font-bold ${isCritical
-              ? "text-red-400 animate-pulse"
-              : isWarning
-                ? "text-yellow-400"
-                : "text-white"
-            }`}
-        >
-          {formatTime(timer.remaining)}
-        </div>
-      </div>
-
-      {timer.isInstructor && (
-        <div className="flex flex-col gap-2 w-full">
-          <div className="flex gap-2">
-            <input
-              type="number"
-              min="1"
-              max="60"
-              value={customMinutes}
-              onChange={(e) => setCustomMinutes(parseInt(e.target.value) || 1)}
-              className="flex-1 rounded-md border border-slate-700 bg-slate-800 px-2 py-1 text-sm text-white outline-none focus:border-blue-400"
-              placeholder="Minutes"
-            />
-            <button
-              onClick={setCustomTimer}
-              className="rounded-md bg-blue-500 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-600"
-            >
-              Set
-            </button>
-          </div>
-
-          <div className="flex gap-2">
-            {timer.isRunning ? (
-              <button
-                onClick={pauseTimer}
-                className="flex-1 rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white hover:bg-yellow-600"
-              >
-                Pause
-              </button>
-            ) : (
-              <button
-                onClick={startTimer}
-                className="flex-1 rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white hover:bg-green-600"
-              >
-                Start
-              </button>
-            )}
-            <button
-              onClick={resetTimer}
-              className="flex-1 rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-600"
-            >
-              Reset
-            </button>
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-sm text-center">Timer</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div className="text-center">
+          <div
+            className={`text-4xl font-mono font-bold ${isCritical
+                ? "text-red-600 animate-pulse"
+                : isWarning
+                  ? "text-yellow-600"
+                  : "text-gray-900"
+              }`}
+          >
+            {formatTime(timer.remaining)}
           </div>
         </div>
-      )}
 
-      {!timer.isInstructor && timer.remaining === 0 && (
-        <p className="text-xs text-red-400 animate-pulse">Time's up!</p>
-      )}
-    </div>
+        {timer.isInstructor && (
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                min="1"
+                max="60"
+                value={customMinutes}
+                onChange={(e) => setCustomMinutes(parseInt(e.target.value) || 1)}
+                placeholder="Minutes"
+                className="flex-1"
+              />
+              <Button onClick={setCustomTimer} size="sm">
+                Set
+              </Button>
+            </div>
+
+            <div className="flex gap-2">
+              {timer.isRunning ? (
+                <Button
+                  onClick={pauseTimer}
+                  variant="default"
+                  className="flex-1 bg-yellow-500 hover:bg-yellow-600"
+                >
+                  Pause
+                </Button>
+              ) : (
+                <Button
+                  onClick={startTimer}
+                  variant="default"
+                  className="flex-1 bg-green-500 hover:bg-green-600"
+                >
+                  Start
+                </Button>
+              )}
+              <Button
+                onClick={resetTimer}
+                variant="outline"
+                className="flex-1"
+              >
+                Reset
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {!timer.isInstructor && timer.remaining === 0 && (
+          <Alert variant="destructive">
+            <AlertDescription className="text-xs animate-pulse">Time's up!</AlertDescription>
+          </Alert>
+        )}
+      </CardContent>
+    </Card>
   );
 }
