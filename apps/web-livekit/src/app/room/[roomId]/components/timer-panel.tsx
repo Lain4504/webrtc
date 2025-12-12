@@ -49,12 +49,12 @@ export default function TimerPanel() {
     const decoder = new TextDecoder();
     const handler = (
       payload: Uint8Array,
-      participant: { identity: string },
+      participant: { identity: string } | undefined,
       _kind: unknown,
       topic?: string,
     ) => {
       if (topic !== "timer") return;
-      if (participant.identity === room.localParticipant?.identity) return;
+      if (!participant || participant.identity === room.localParticipant?.identity) return;
 
       try {
         const message = JSON.parse(decoder.decode(payload)) as TimerMessage;
@@ -220,13 +220,12 @@ export default function TimerPanel() {
       <div className="text-center">
         <h3 className="text-sm font-semibold text-slate-400 mb-2">Timer</h3>
         <div
-          className={`text-4xl font-mono font-bold ${
-            isCritical
+          className={`text-4xl font-mono font-bold ${isCritical
               ? "text-red-400 animate-pulse"
               : isWarning
                 ? "text-yellow-400"
                 : "text-white"
-          }`}
+            }`}
         >
           {formatTime(timer.remaining)}
         </div>

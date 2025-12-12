@@ -198,12 +198,12 @@ function InRoomLayout({
     const decoder = new TextDecoder();
     const handleDataReceived = (
       payload: Uint8Array,
-      participant: { identity: string },
+      participant: { identity: string } | undefined,
       _kind: unknown,
       topic?: string,
     ) => {
       if (topic !== "participant-state") return;
-      if (participant.identity !== localParticipant.identity) return;
+      if (!participant || participant.identity !== localParticipant.identity) return;
 
       try {
         const message = JSON.parse(decoder.decode(payload)) as {
@@ -230,10 +230,10 @@ function InRoomLayout({
   const toggleHand = async () => {
     if (!localParticipant || !room) return;
     const newStatus = !isHandRaised;
-    
+
     // Update local state immediately for better UX
     setIsHandRaised(newStatus);
-    
+
     try {
       // Try to update attributes first (preferred method)
       try {
@@ -316,11 +316,10 @@ function InRoomLayout({
               <ReactionsPanel />
               <button
                 onClick={toggleHand}
-                className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  isHandRaised
+                className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${isHandRaised
                     ? "bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30 border border-yellow-500/50"
                     : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700"
-                }`}
+                  }`}
                 title={isHandRaised ? "Lower Hand" : "Raise Hand"}
               >
                 <svg
@@ -348,46 +347,42 @@ function InRoomLayout({
       <aside className="col-span-12 lg:col-span-3 flex flex-col border-l border-slate-800 bg-slate-900/50">
         <ParticipantsPanel />
         <AttendancePanel />
-        
+
         {/* Tab Navigation */}
         <div className="flex border-b border-slate-800">
           <button
             onClick={() => setActiveTab("chat")}
-            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === "chat"
+            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === "chat"
                 ? "bg-slate-800 text-white border-b-2 border-blue-500"
                 : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-            }`}
+              }`}
           >
             Chat
           </button>
           <button
             onClick={() => setActiveTab("polls")}
-            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === "polls"
+            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === "polls"
                 ? "bg-slate-800 text-white border-b-2 border-blue-500"
                 : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-            }`}
+              }`}
           >
             Polls
           </button>
           <button
             onClick={() => setActiveTab("files")}
-            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === "files"
+            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === "files"
                 ? "bg-slate-800 text-white border-b-2 border-blue-500"
                 : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-            }`}
+              }`}
           >
             Files
           </button>
           <button
             onClick={() => setActiveTab("recordings")}
-            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === "recordings"
+            className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === "recordings"
                 ? "bg-slate-800 text-white border-b-2 border-blue-500"
                 : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-            }`}
+              }`}
           >
             Recordings
           </button>

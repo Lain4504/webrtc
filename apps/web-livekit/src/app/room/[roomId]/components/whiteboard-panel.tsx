@@ -67,12 +67,12 @@ export default function WhiteboardPanel({ role = "student" }: WhiteboardPanelPro
 
     const handler = (
       payload: Uint8Array,
-      participant: { identity: string },
+      participant: { identity: string } | undefined,
       _kind: unknown,
       topic?: string,
     ) => {
       if (topic !== "whiteboard") return;
-      if (participant.identity === room.localParticipant?.identity) return;
+      if (!participant || participant.identity === room.localParticipant?.identity) return;
 
       try {
         const message = JSON.parse(decoder.decode(payload)) as WhiteboardMessage;
@@ -113,7 +113,7 @@ export default function WhiteboardPanel({ role = "student" }: WhiteboardPanelPro
         if (message.type === "drawing-update" || message.type === "state-sync") {
           if (message.data.snapshot) {
             try {
-              loadSnapshot(store, message.data.snapshot);
+              loadSnapshot(store, message.data.snapshot as any);
             } catch (error) {
               console.warn("Failed to load snapshot", error);
             }
@@ -247,7 +247,7 @@ export default function WhiteboardPanel({ role = "student" }: WhiteboardPanelPro
         <Tldraw
           store={store}
           onMount={handleMount}
-          readOnly={isReadOnly}
+          {...({ readOnly: isReadOnly } as any)}
           inferDarkMode
         />
       </div>

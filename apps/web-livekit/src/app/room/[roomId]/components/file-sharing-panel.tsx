@@ -46,12 +46,12 @@ export default function FileSharingPanel() {
     const decoder = new TextDecoder();
     const handler = (
       payload: Uint8Array,
-      participant: { identity: string },
+      participant: { identity: string } | undefined,
       _kind: unknown,
       topic?: string,
     ) => {
       if (topic !== "file-sharing") return;
-      if (participant.identity === room.localParticipant?.identity) return;
+      if (!participant || participant.identity === room.localParticipant?.identity) return;
 
       try {
         const message = JSON.parse(decoder.decode(payload)) as FileMessage;
@@ -107,11 +107,11 @@ export default function FileSharingPanel() {
 
       // Then send file data in chunks (using byte streams if available)
       if (
-        typeof localParticipant.sendFile === "function" &&
+        typeof (localParticipant as any).sendFile === "function" &&
         file instanceof File
       ) {
         // Use sendFile API if available
-        await localParticipant.sendFile(file, {
+        await (localParticipant as any).sendFile(file, {
           topic: "file-data",
           mimeType: file.type,
         });
@@ -149,7 +149,7 @@ export default function FileSharingPanel() {
     if (file.url) {
       window.open(file.url, "_blank");
     } else if (file.data) {
-      const blob = new Blob([file.data], { type: file.type });
+      const blob = new Blob([file.data as any], { type: file.type });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;

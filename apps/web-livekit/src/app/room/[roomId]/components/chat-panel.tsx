@@ -22,11 +22,11 @@ export default function ChatPanel() {
 
     // Check if registerTextStreamHandler is available (newer API)
     if (
-      typeof localParticipant.registerTextStreamHandler === "function"
+      typeof (localParticipant as any).registerTextStreamHandler === "function"
     ) {
-      const unregister = localParticipant.registerTextStreamHandler(
+      const unregister = (localParticipant as any).registerTextStreamHandler(
         "chat",
-        async (reader, participantInfo) => {
+        async (reader: any, participantInfo: any) => {
           try {
             // Read all text from the stream
             const text = await reader.readAll();
@@ -82,8 +82,8 @@ export default function ChatPanel() {
 
     try {
       // Try using sendText API (newer, better for long messages)
-      if (typeof localParticipant.sendText === "function") {
-        await localParticipant.sendText(messageText, {
+      if (typeof (localParticipant as any).sendText === "function") {
+        await (localParticipant as any).sendText(messageText, {
           topic: "chat",
         });
 

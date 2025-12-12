@@ -32,11 +32,12 @@ export default function ReactionsPanel() {
     const decoder = new TextDecoder();
     const handler = (
       payload: Uint8Array,
-      participant: { identity: string; name?: string },
+      participant: { identity: string; name?: string } | undefined,
       _kind: unknown,
       topic?: string,
     ) => {
       if (topic !== "reactions") return;
+      if (!participant) return;
 
       try {
         const message = JSON.parse(decoder.decode(payload)) as ReactionMessage;

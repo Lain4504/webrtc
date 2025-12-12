@@ -53,12 +53,12 @@ export default function PollPanel() {
     const decoder = new TextDecoder();
     const handler = (
       payload: Uint8Array,
-      participant: { identity: string },
+      participant: { identity: string } | undefined,
       _kind: unknown,
       topic?: string,
     ) => {
       if (topic !== "poll") return;
-      if (participant.identity === room.localParticipant?.identity) return;
+      if (!participant || participant.identity === room.localParticipant?.identity) return;
 
       try {
         const message = JSON.parse(decoder.decode(payload)) as PollMessage;
@@ -310,13 +310,12 @@ function PollCard({
               key={option.id}
               onClick={() => !currentVote && onVote(poll.id, option.id)}
               disabled={!!currentVote}
-              className={`w-full text-left rounded-md px-3 py-2 text-sm transition-colors ${
-                isSelected
+              className={`w-full text-left rounded-md px-3 py-2 text-sm transition-colors ${isSelected
                   ? "bg-blue-500/20 border-2 border-blue-500"
                   : currentVote
                     ? "bg-slate-700/50 border border-slate-600"
                     : "bg-slate-700 border border-slate-600 hover:bg-slate-600"
-              }`}
+                }`}
             >
               <div className="flex items-center justify-between mb-1">
                 <span className={isSelected ? "text-blue-300 font-medium" : "text-slate-200"}>

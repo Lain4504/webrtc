@@ -29,31 +29,31 @@ interface ParticipantItemProps {
 function ParticipantItem({ participant }: ParticipantItemProps) {
   const { identity, name, isSpeaking, connectionQuality, attributes } = participant;
   const { metadata } = useParticipantInfo({ participant });
-  
+
   const handRaised = attributes?.handRaised === "true";
 
   const audioTrack = useTracks(
-    [{ participant, sources: [Track.Source.Microphone] }],
+    [Track.Source.Microphone],
     { onlySubscribed: false },
-  )[0];
+  ).find((t) => t.participant.identity === participant.identity);
   const videoTrack = useTracks(
-    [{ participant, sources: [Track.Source.Camera] }],
+    [Track.Source.Camera],
     { onlySubscribed: false },
-  )[0];
+  ).find((t) => t.participant.identity === participant.identity);
 
   const role = metadata ? JSON.parse(metadata)?.role : "student";
 
   let connectionColor = "text-green-500";
   if (connectionQuality === ConnectionQuality.Poor) {
     connectionColor = "text-red-500";
-  } else if (connectionQuality === ConnectionQuality.Good) {
-    connectionColor = "text-yellow-500";
+  } else if (connectionQuality === ConnectionQuality.Excellent) {
+    connectionColor = "text-green-500";
   }
 
   return (
     <li className="flex items-center justify-between rounded-md bg-slate-800/50 px-3 py-2 text-sm text-slate-200">
       <div className="flex items-center gap-2">
-        <div title={`Connection: ${ConnectionQuality[connectionQuality]}`}>
+        <div title={`Connection: ${(ConnectionQuality as any)[connectionQuality]}`}>
           <svg className={`h-3 w-3 ${connectionColor}`} viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h2v2h-2zm0-10h2v8h-2z" />
           </svg>
