@@ -139,15 +139,15 @@ export class LivekitService {
     },
   ) {
     const client = this.getRoomClient();
-    // LiveKit SDK: updateParticipant(room: string, identity: string, metadata?: string, name?: string, permission?: ParticipantPermission)
-    // Note: SDK accepts permission as separate parameter, not nested in options
-    return client.updateParticipant(
-      roomName,
-      identity,
-      options.metadata,
-      options.name,
-      options.permission as any, // Type assertion for permission object
-    );
+    // LiveKit SDK supports two overloads:
+    // 1. updateParticipant(room, identity, options: UpdateParticipantOptions)
+    // 2. updateParticipant(room, identity, metadata?, permission?, name?)
+    // Using the first overload with options object for clarity
+    return client.updateParticipant(roomName, identity, {
+      metadata: options.metadata,
+      name: options.name,
+      permission: options.permission as any, // Type assertion for permission object
+    });
   }
 
   async removeParticipant(roomName: string, identity: string): Promise<void> {
