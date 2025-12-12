@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="updateUI">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="meet base code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/chat-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/chat-panel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/file-sharing-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/file-sharing-panel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/participants-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/participants-panel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/reactions-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/reactions-panel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/screen-share-button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/screen-share-button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/video-grid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/video-grid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/request-token.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/request-token.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +100,7 @@
       <workItem from="1765464603298" duration="9762000" />
       <workItem from="1765503464936" duration="4799000" />
       <workItem from="1765509998029" duration="2353000" />
-      <workItem from="1765555167665" duration="1785000" />
+      <workItem from="1765555167665" duration="6111000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <option name="closed" value="true" />
@@ -347,7 +342,39 @@
       <option name="project" value="LOCAL" />
       <updated>1765554708889</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765557576085</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1765557576087</updated>
+    </task>
+    <task id="LOCAL-00032" summary="meet base code">
+      <option name="closed" value="true" />
+      <created>1765558104979</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1765558104979</updated>
+    </task>
+    <task id="LOCAL-00033" summary="meet base code">
+      <option name="closed" value="true" />
+      <created>1765558110575</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1765558110575</updated>
+    </task>
+    <task id="LOCAL-00034" summary="meet base code">
+      <option name="closed" value="true" />
+      <created>1765558537506</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1765558537506</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -387,7 +414,8 @@
     <MESSAGE value="turn off eslint" />
     <MESSAGE value="instal shadcn ui" />
     <MESSAGE value="updateUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="updateUI" />
+    <MESSAGE value="meet base code" />
+    <option name="LAST_COMMIT_MESSAGE" value="meet base code" />
   </component>
   <component name="com.apollographql.ijplugin.settings.ProjectSettingsState">
     <option name="lspPassPathToSuperGraphYaml" value="false" />

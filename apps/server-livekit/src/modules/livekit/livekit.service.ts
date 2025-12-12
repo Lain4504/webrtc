@@ -17,6 +17,7 @@ export interface CreateTokenInput {
   identity: string;
   name: string;
   role: LivekitRole;
+  metadata?: string; // Optional additional metadata
 }
 
 @Injectable()
@@ -84,9 +85,21 @@ export class LivekitService {
       roomRecord: input.role === 'instructor', // Only instructors can record
     });
 
-    token.metadata = JSON.stringify({
+    // Build metadata object with role and optional additional metadata
+    const metadata: any = {
       role: input.role,
-    });
+    };
+    // Merge additional metadata if provided
+    if (input.metadata) {
+      try {
+        const additionalMetadata = JSON.parse(input.metadata);
+        Object.assign(metadata, additionalMetadata);
+      } catch {
+        // If metadata is not valid JSON, use it as string
+        metadata.custom = input.metadata;
+      }
+    }
+    token.metadata = JSON.stringify(metadata);
 
     return token.toJwt();
   }

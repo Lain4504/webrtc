@@ -46,6 +46,7 @@ export class RoomService {
       identity: dto.participantIdentity,
       name: dto.participantName,
       role: dto.role,
+      metadata: dto.metadata,
     });
 
     return {
