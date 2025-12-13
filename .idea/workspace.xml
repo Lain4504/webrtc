@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="whiteboard logic">
-      <change beforePath="$PROJECT_DIR$/apps/meet/lib/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meet/lib/config.ts" afterDir="false" />
+    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="fix eslint and eror build">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -429,7 +429,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765612443026</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="fix eslint and eror build">
+      <option name="closed" value="true" />
+      <created>1765612977031</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1765612977032</updated>
+    </task>
+    <task id="LOCAL-00042" summary="fix eslint and eror build">
+      <option name="closed" value="true" />
+      <created>1765613100420</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1765613100420</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -480,7 +496,8 @@
     <MESSAGE value="modify meet" />
     <MESSAGE value="custom ui meet" />
     <MESSAGE value="whiteboard logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="whiteboard logic" />
+    <MESSAGE value="fix eslint and eror build" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix eslint and eror build" />
   </component>
   <component name="com.apollographql.ijplugin.settings.ProjectSettingsState">
     <option name="lspPassPathToSuperGraphYaml" value="false" />
