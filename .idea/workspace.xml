@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="whiteboard logic">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/meet/lib/CustomVideoConference.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meet/lib/CustomVideoConference.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/meet/lib/WhiteboardTile.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meet/lib/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/meet/lib/config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -423,7 +421,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765612018697</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="whiteboard logic">
+      <option name="closed" value="true" />
+      <created>1765612443026</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1765612443026</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

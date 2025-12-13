@@ -79,7 +79,7 @@ export function useReactions() {
         const encoder = new TextEncoder();
         const data = encoder.encode(JSON.stringify(reactionData));
 
-        await localParticipant.publishData(data, DataPacket_Kind.RELIABLE);
+        await localParticipant.publishData(data, { reliable: true });
 
         // Also show locally
         const participantName = localParticipant.name || localParticipant.identity;
@@ -117,7 +117,7 @@ export interface ReactionsButtonProps extends React.ButtonHTMLAttributes<HTMLBut
 export function ReactionsButton({ className, onReactionSelect, ...props }: ReactionsButtonProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const { sendReaction, availableReactions } = useReactions();
-  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const buttonRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -214,7 +214,7 @@ export function ReactionsButton({ className, onReactionSelect, ...props }: React
   );
 }
 
-export interface ReactionsOverlayProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ReactionsOverlayProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function ReactionsOverlay({ className, ...props }: ReactionsOverlayProps) {
   const { reactions } = useReactions();

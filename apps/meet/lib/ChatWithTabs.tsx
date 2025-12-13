@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Chat, useMaybeLayoutContext, ChatToggle, useChat } from '@livekit/components-react';
-import type { MessageFormatter, MessageDecoder, MessageEncoder, ChatOptions } from '@livekit/components-react';
+import type { MessageFormatter, MessageDecoder, MessageEncoder } from '@livekit/components-react';
 import { ChatEntry } from '@livekit/components-react';
 import { PollsPanel, usePolls } from './Polls';
 
@@ -47,7 +47,7 @@ export function ChatWithTabs({
   const [activeTab, setActiveTab] = React.useState<'chat' | 'polls'>('chat');
   const { activePoll } = usePolls();
 
-  const chatOptions: ChatOptions = React.useMemo(() => {
+  const chatOptions = React.useMemo(() => {
     return { messageDecoder, messageEncoder, channelTopic };
   }, [messageDecoder, messageEncoder, channelTopic]);
 

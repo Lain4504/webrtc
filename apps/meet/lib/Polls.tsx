@@ -290,7 +290,7 @@ export function PollsPanel({ className, onClose, inTab = true, ...props }: Polls
     { id: '2', text: '' },
   ]);
 
-  const canCreate = localParticipant?.isPublisher ?? false;
+  const canCreate = localParticipant?.permissions?.canPublish ?? false;
 
   const handleCreatePoll = async () => {
     if (!question.trim()) return;
@@ -345,15 +345,15 @@ export function PollsPanel({ className, onClose, inTab = true, ...props }: Polls
         overflow: 'hidden',
         ...(inTab
           ? {
-              // In tab mode: no extra padding, use parent padding
-            }
+            // In tab mode: no extra padding, use parent padding
+          }
           : {
-              padding: '16px',
-              backgroundColor: 'var(--lk-bg-secondary, #1a1a1a)',
-              borderRadius: '8px',
-              maxHeight: '500px',
-              overflowY: 'auto',
-            }),
+            padding: '16px',
+            backgroundColor: 'var(--lk-bg-secondary, #1a1a1a)',
+            borderRadius: '8px',
+            maxHeight: '500px',
+            overflowY: 'auto',
+          }),
       }}
       {...props}
     >
