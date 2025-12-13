@@ -112,9 +112,10 @@ export function useReactions() {
 
 export interface ReactionsButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onReactionSelect?: (emoji: ReactionType) => void;
+  showText?: boolean;
 }
 
-export function ReactionsButton({ className, onReactionSelect, ...props }: ReactionsButtonProps) {
+export function ReactionsButton({ className, onReactionSelect, showText = true, ...props }: ReactionsButtonProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const { sendReaction, availableReactions } = useReactions();
   const buttonRef = React.useRef<HTMLDivElement>(null);
@@ -158,7 +159,7 @@ export function ReactionsButton({ className, onReactionSelect, ...props }: React
             fill="currentColor"
           />
         </svg>
-        <span className="lk-button-text">Reactions</span>
+        {showText && <span className="lk-button-text">Reactions</span>}
       </button>
       {isOpen && (
         <div

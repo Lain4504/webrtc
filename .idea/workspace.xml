@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="fix eslint and eror build">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="update dependency" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,28 +39,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.localhost:3000.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "#1 on webhook",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "E:/Ky8/webrtc/apps/web-livekit",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "E:\\Ky8\\webrtc\\apps\\components-js\\node_modules\\prettier",
-    "ts.external.directory.path": "E:\\Ky8\\webrtc\\apps\\components-js\\tooling\\eslint-config-custom\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.localhost:3000.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Ky8/webrtc&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;E:\\Ky8\\webrtc\\apps\\components-js\\node_modules\\prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;E:\\Ky8\\webrtc\\apps\\server-livekit\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Ky8\webrtc\apps\web-livekit" />
@@ -108,6 +106,10 @@
       <workItem from="1765509998029" duration="2353000" />
       <workItem from="1765555167665" duration="6111000" />
       <workItem from="1765596374586" duration="3346000" />
+      <workItem from="1765625915429" duration="8000" />
+      <workItem from="1765626127166" duration="3327000" />
+      <workItem from="1765629605856" duration="544000" />
+      <workItem from="1765630427556" duration="1161000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <option name="closed" value="true" />
@@ -445,18 +447,67 @@
       <option name="project" value="LOCAL" />
       <updated>1765613100420</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="update dependency">
+      <option name="closed" value="true" />
+      <created>1765626284458</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1765626284458</updated>
+    </task>
+    <task id="LOCAL-00044" summary="update dependency">
+      <option name="closed" value="true" />
+      <created>1765626744935</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1765626744935</updated>
+    </task>
+    <task id="LOCAL-00045" summary="update dependency">
+      <option name="closed" value="true" />
+      <created>1765627438634</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1765627438634</updated>
+    </task>
+    <task id="LOCAL-00046" summary="update dependency">
+      <option name="closed" value="true" />
+      <created>1765628407398</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1765628407398</updated>
+    </task>
+    <task id="LOCAL-00047" summary="update dependency">
+      <option name="closed" value="true" />
+      <created>1765629157395</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1765629157395</updated>
+    </task>
+    <task id="LOCAL-00048" summary="update dependency">
+      <option name="closed" value="true" />
+      <created>1765630946333</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1765630946333</updated>
+    </task>
+    <task id="LOCAL-00049" summary="update dependency">
+      <option name="closed" value="true" />
+      <created>1765631275164</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1765631275164</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-    <option name="additionalRoots">
-      <list>
-        <option value="$PROJECT_DIR$/apps/components-js/packages/styles/dist/types/general/index.css.d.ts" />
-        <option value="$PROJECT_DIR$/apps/components-js/packages/react/dist/index.d.ts" />
-        <option value="$PROJECT_DIR$/apps/components-js/packages/core/dist/index.d.ts" />
-      </list>
-    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -497,7 +548,8 @@
     <MESSAGE value="custom ui meet" />
     <MESSAGE value="whiteboard logic" />
     <MESSAGE value="fix eslint and eror build" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix eslint and eror build" />
+    <MESSAGE value="update dependency" />
+    <option name="LAST_COMMIT_MESSAGE" value="update dependency" />
   </component>
   <component name="com.apollographql.ijplugin.settings.ProjectSettingsState">
     <option name="lspPassPathToSuperGraphYaml" value="false" />

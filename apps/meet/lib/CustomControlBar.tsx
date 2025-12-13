@@ -10,7 +10,7 @@ import {
   useMaybeLayoutContext,
   MediaDeviceMenu,
 } from '@livekit/components-react';
-import { supportsScreenSharing } from '@livekit/components-core';
+import { supportsScreenSharing } from './lk-utils';
 import { RaiseHandButton } from './RaiseHand';
 import { ReactionsButton } from './Reactions';
 
@@ -53,7 +53,7 @@ export interface CustomControlBarProps extends React.HTMLAttributes<HTMLDivEleme
  * with RaiseHand and Reactions buttons positioned before the Chat button.
  */
 export function CustomControlBar({
-  variation = 'verbose',
+  variation = 'minimal',
   controls,
   onDeviceError,
   className,
@@ -158,8 +158,8 @@ export function CustomControlBar({
         </TrackToggle>
       )}
       {/* Custom buttons: RaiseHand, Reactions, and Whiteboard before Chat */}
-      {visibleControls.raiseHand && <RaiseHandButton />}
-      {visibleControls.reactions && <ReactionsButton />}
+      {visibleControls.raiseHand && <RaiseHandButton showText={showText} />}
+      {visibleControls.reactions && <ReactionsButton showText={showText} />}
       {visibleControls.whiteboard && (
         <button
           className="lk-button lk-button-menu"

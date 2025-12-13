@@ -65,9 +65,11 @@ export function useRaiseHand() {
   };
 }
 
-export interface RaiseHandButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface RaiseHandButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  showText?: boolean;
+}
 
-export function RaiseHandButton({ className, ...props }: RaiseHandButtonProps) {
+export function RaiseHandButton({ className, showText = true, ...props }: RaiseHandButtonProps) {
   const { isRaised, toggleRaiseHand } = useRaiseHand();
 
   return (
@@ -95,7 +97,7 @@ export function RaiseHandButton({ className, ...props }: RaiseHandButtonProps) {
           fill="currentColor"
         />
       </svg>
-      <span className="lk-button-text">{isRaised ? 'Lower hand' : 'Raise hand'}</span>
+      {showText && <span className="lk-button-text">{isRaised ? 'Lower hand' : 'Raise hand'}</span>}
     </button>
   );
 }

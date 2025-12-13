@@ -1,15 +1,14 @@
 'use client';
 
 import type {
-  MessageDecoder,
-  MessageEncoder,
   TrackReferenceOrPlaceholder,
   WidgetState,
-} from '@livekit/components-core';
-import { isEqualTrackRef, isTrackReference, isWeb, log } from '@livekit/components-core';
+} from '@livekit/components-react';
+import { isTrackReference } from '@livekit/components-react';
+import { isEqualTrackRef, isWeb } from './lk-utils';
 import { RoomEvent, Track } from 'livekit-client';
 import * as React from 'react';
-import type { MessageFormatter } from '@livekit/components-react';
+import type { MessageFormatter, MessageDecoder, MessageEncoder } from '@livekit/components-react';
 import {
   CarouselLayout,
   ConnectionStateToast,
@@ -68,7 +67,7 @@ export function CustomVideoConference({
   );
 
   const widgetUpdate = (state: WidgetState) => {
-    log.debug('updating widget state', state);
+    console.debug('updating widget state', state);
     setWidgetState(state);
   };
 
@@ -180,7 +179,7 @@ export function CustomVideoConference({
       screenShareTracks.some((track) => track.publication.isSubscribed) &&
       lastAutoFocusedScreenShareTrack.current === null
     ) {
-      log.debug('Auto set screen share focus:', { newScreenShareTrack: screenShareTracks[0] });
+      console.debug('Auto set screen share focus:', { newScreenShareTrack: screenShareTracks[0] });
       layoutContext.pin.dispatch?.({ msg: 'clear_pin' });
       layoutContext.pin.dispatch?.({ msg: 'set_pin', trackReference: screenShareTracks[0] });
       lastAutoFocusedScreenShareTrack.current = screenShareTracks[0];
@@ -199,7 +198,7 @@ export function CustomVideoConference({
           lastAutoFocusedScreenShareTrack.current?.publication?.trackSid,
       )
     ) {
-      log.debug('Auto clearing screen share focus.');
+      console.debug('Auto clearing screen share focus.');
       layoutContext.pin.dispatch?.({ msg: 'clear_pin' });
       lastAutoFocusedScreenShareTrack.current = null;
 
