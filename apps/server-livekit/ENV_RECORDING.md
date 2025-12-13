@@ -46,6 +46,7 @@ S3_FORCE_PATH_STYLE=false  # Set true cho S3-compatible storage như MinIO, Clou
 ## Ví dụ cấu hình
 
 ### AWS S3
+
 ```env
 S3_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE
 S3_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
@@ -54,6 +55,7 @@ S3_REGION=us-east-1
 ```
 
 ### Cloudflare R2
+
 ```env
 S3_ACCESS_KEY=your-r2-access-key-id
 S3_SECRET_KEY=your-r2-secret-access-key
@@ -64,6 +66,7 @@ S3_REGION=auto
 ```
 
 ### MinIO (Local)
+
 ```env
 S3_ACCESS_KEY=minioadmin
 S3_SECRET_KEY=minioadmin

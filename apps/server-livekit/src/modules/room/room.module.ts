@@ -7,5 +7,6 @@ import { RoomService } from './room.service';
   imports: [LivekitModule],
   controllers: [RoomController],
   providers: [RoomService],
+  exports: [RoomService], // Export RoomService để các module khác có thể sử dụng
 })
 export class RoomModule {}

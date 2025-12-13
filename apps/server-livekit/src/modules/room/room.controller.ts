@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { RequestTokenDto } from './dto/request-token.dto';
 import { StartRecordingDto } from './dto/start-recording.dto';
@@ -9,6 +9,11 @@ import { RoomService } from './room.service';
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
+  @Get()
+  listRooms() {
+    return this.roomService.listRooms();
+  }
+
   @Post()
   createRoom(@Body() dto: CreateRoomDto): Promise<RoomRecord> {
     return this.roomService.createRoom(dto);
@@ -17,6 +22,11 @@ export class RoomController {
   @Get(':id')
   getRoom(@Param('id') id: string): RoomRecord {
     return this.roomService.getRoom(id);
+  }
+
+  @Delete(':id')
+  deleteRoom(@Param('id') id: string): Promise<void> {
+    return this.roomService.deleteRoom(id);
   }
 
   @Post(':id/token')

@@ -46,6 +46,7 @@ export class RoomService {
       identity: dto.participantIdentity,
       name: dto.participantName,
       role: dto.role,
+      metadata: dto.metadata,
     });
 
     return {
@@ -80,5 +81,15 @@ export class RoomService {
   async listRecordings(roomId?: string): Promise<any[]> {
     const roomName = roomId ? this.getRoom(roomId).name : undefined;
     return this.livekitService.listRecordings(roomName);
+  }
+
+  async listRooms() {
+    return this.livekitService.listRooms();
+  }
+
+  async deleteRoom(roomId: string): Promise<void> {
+    const room = this.getRoom(roomId);
+    await this.livekitService.deleteRoom(room.name);
+    this.rooms.delete(roomId);
   }
 }

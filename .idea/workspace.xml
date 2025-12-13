@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="record features">
-      <change afterPath="$PROJECT_DIR$/apps/server-livekit/ENV_RECORDING.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/server-livekit/ENV_SETUP.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/start-recording.dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web-livekit/RECORDING_AUTO_STOP.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/recording-panel.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/recordings-list.tsx" afterDir="false" />
+    <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="fix eslint and eror build">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_COMMON_BRANCH" value="main" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
@@ -35,8 +26,12 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Lain4504/webrtc.git&quot;,
-    &quot;accountId&quot;: &quot;849886b4-fefd-425b-8df5-973c7910d660&quot;
+    &quot;accountId&quot;: &quot;b00df774-879c-47f6-b5d3-0a65d83c1c54&quot;
   }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
 }</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -48,11 +43,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JavaScript Debug.localhost:3000.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "#1 on webhook",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "E:/Ky8/webrtc/apps/web-livekit",
@@ -61,7 +58,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "E:\\Ky8\\webrtc\\apps\\web-livekit\\node_modules\\typescript\\lib",
+    "prettierjs.PrettierConfiguration.Package": "E:\\Ky8\\webrtc\\apps\\components-js\\node_modules\\prettier",
+    "ts.external.directory.path": "E:\\Ky8\\webrtc\\apps\\components-js\\tooling\\eslint-config-custom\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -70,13 +68,30 @@
       <recent name="E:\Ky8\webrtc\apps\web-livekit" />
       <recent name="E:\Ky8\webrtc\apps\server-livekit" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Ky8\webrtc\apps\web-livekit" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="localhost:3000" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:3000">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.localhost:3000" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.109" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.109" />
       </set>
     </attachedChunks>
+  </component>
+  <component name="SwiftWorkspaceSettings">
+    <option name="detectedToolchain" value="true" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -88,7 +103,11 @@
       <workItem from="1765459914092" duration="1392000" />
       <workItem from="1765462833324" duration="67000" />
       <workItem from="1765464013787" duration="67000" />
-      <workItem from="1765464603298" duration="9461000" />
+      <workItem from="1765464603298" duration="9762000" />
+      <workItem from="1765503464936" duration="4799000" />
+      <workItem from="1765509998029" duration="2353000" />
+      <workItem from="1765555167665" duration="6111000" />
+      <workItem from="1765596374586" duration="3346000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <option name="closed" value="true" />
@@ -170,18 +189,293 @@
       <option name="project" value="LOCAL" />
       <updated>1765472068786</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="record features">
+      <option name="closed" value="true" />
+      <created>1765474171953</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1765474171953</updated>
+    </task>
+    <task id="LOCAL-00012" summary="record features">
+      <option name="closed" value="true" />
+      <created>1765474411488</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1765474411488</updated>
+    </task>
+    <task id="LOCAL-00013" summary="webhook and mute features">
+      <option name="closed" value="true" />
+      <created>1765504652222</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1765504652222</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix import module server">
+      <option name="closed" value="true" />
+      <created>1765505223237</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1765505223237</updated>
+    </task>
+    <task id="LOCAL-00015" summary="turn off eslint">
+      <option name="closed" value="true" />
+      <created>1765507289521</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1765507289522</updated>
+    </task>
+    <task id="LOCAL-00016" summary="instal shadcn ui">
+      <option name="closed" value="true" />
+      <created>1765546914367</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1765546914367</updated>
+    </task>
+    <task id="LOCAL-00017" summary="instal shadcn ui">
+      <option name="closed" value="true" />
+      <created>1765547731565</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1765547731565</updated>
+    </task>
+    <task id="LOCAL-00018" summary="instal shadcn ui">
+      <option name="closed" value="true" />
+      <created>1765547736851</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1765547736851</updated>
+    </task>
+    <task id="LOCAL-00019" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765548635888</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1765548635889</updated>
+    </task>
+    <task id="LOCAL-00020" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765549165878</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1765549165878</updated>
+    </task>
+    <task id="LOCAL-00021" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765549431968</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1765549431968</updated>
+    </task>
+    <task id="LOCAL-00022" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765550634656</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1765550634656</updated>
+    </task>
+    <task id="LOCAL-00023" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765551042501</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1765551042501</updated>
+    </task>
+    <task id="LOCAL-00024" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765551805422</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1765551805422</updated>
+    </task>
+    <task id="LOCAL-00025" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765552229395</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1765552229395</updated>
+    </task>
+    <task id="LOCAL-00026" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765552605394</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1765552605394</updated>
+    </task>
+    <task id="LOCAL-00027" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765552815940</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1765552815940</updated>
+    </task>
+    <task id="LOCAL-00028" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765552916513</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1765552916513</updated>
+    </task>
+    <task id="LOCAL-00029" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765553617234</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1765553617234</updated>
+    </task>
+    <task id="LOCAL-00030" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765554708889</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1765554708889</updated>
+    </task>
+    <task id="LOCAL-00031" summary="updateUI">
+      <option name="closed" value="true" />
+      <created>1765557576085</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1765557576087</updated>
+    </task>
+    <task id="LOCAL-00032" summary="meet base code">
+      <option name="closed" value="true" />
+      <created>1765558104979</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1765558104979</updated>
+    </task>
+    <task id="LOCAL-00033" summary="meet base code">
+      <option name="closed" value="true" />
+      <created>1765558110575</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1765558110575</updated>
+    </task>
+    <task id="LOCAL-00034" summary="meet base code">
+      <option name="closed" value="true" />
+      <created>1765558537506</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1765558537506</updated>
+    </task>
+    <task id="LOCAL-00035" summary="modify meet">
+      <option name="closed" value="true" />
+      <created>1765596874094</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1765596874095</updated>
+    </task>
+    <task id="LOCAL-00036" summary="modify meet">
+      <option name="closed" value="true" />
+      <created>1765596961924</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1765596961924</updated>
+    </task>
+    <task id="LOCAL-00037" summary="custom ui meet">
+      <option name="closed" value="true" />
+      <created>1765599162636</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1765599162636</updated>
+    </task>
+    <task id="LOCAL-00038" summary="whiteboard logic">
+      <option name="closed" value="true" />
+      <created>1765608572878</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1765608572878</updated>
+    </task>
+    <task id="LOCAL-00039" summary="whiteboard logic">
+      <option name="closed" value="true" />
+      <created>1765612018697</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1765612018697</updated>
+    </task>
+    <task id="LOCAL-00040" summary="whiteboard logic">
+      <option name="closed" value="true" />
+      <created>1765612443026</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1765612443026</updated>
+    </task>
+    <task id="LOCAL-00041" summary="fix eslint and eror build">
+      <option name="closed" value="true" />
+      <created>1765612977031</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1765612977032</updated>
+    </task>
+    <task id="LOCAL-00042" summary="fix eslint and eror build">
+      <option name="closed" value="true" />
+      <created>1765613100420</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1765613100420</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+    <option name="additionalRoots">
+      <list>
+        <option value="$PROJECT_DIR$/apps/components-js/packages/styles/dist/types/general/index.css.d.ts" />
+        <option value="$PROJECT_DIR$/apps/components-js/packages/react/dist/index.d.ts" />
+        <option value="$PROJECT_DIR$/apps/components-js/packages/core/dist/index.d.ts" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="webhook" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -193,7 +487,17 @@
     <MESSAGE value="whiteboard interaction" />
     <MESSAGE value="all learning features" />
     <MESSAGE value="record features" />
-    <option name="LAST_COMMIT_MESSAGE" value="record features" />
+    <MESSAGE value="webhook and mute features" />
+    <MESSAGE value="fix import module server" />
+    <MESSAGE value="turn off eslint" />
+    <MESSAGE value="instal shadcn ui" />
+    <MESSAGE value="updateUI" />
+    <MESSAGE value="meet base code" />
+    <MESSAGE value="modify meet" />
+    <MESSAGE value="custom ui meet" />
+    <MESSAGE value="whiteboard logic" />
+    <MESSAGE value="fix eslint and eror build" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix eslint and eror build" />
   </component>
   <component name="com.apollographql.ijplugin.settings.ProjectSettingsState">
     <option name="lspPassPathToSuperGraphYaml" value="false" />

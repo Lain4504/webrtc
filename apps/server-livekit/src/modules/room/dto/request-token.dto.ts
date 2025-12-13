@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class RequestTokenDto {
   @IsString()
@@ -14,4 +14,8 @@ export class RequestTokenDto {
   @IsString()
   @IsIn(['instructor', 'student'])
   role: 'instructor' | 'student';
+
+  @IsString()
+  @IsOptional()
+  metadata?: string; // Optional metadata to merge with role metadata
 }
