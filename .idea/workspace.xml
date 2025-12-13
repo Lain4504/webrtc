@@ -5,10 +5,111 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd8ce907-2d07-4d07-8d30-5075b9d44ff4" name="Changes" comment="meet base code">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/request-token.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/request-token.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FEATURES_SUMMARY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMPLEMENTATION_SUMMARY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LIVEKIT_CODE_REVIEW.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README_FEATURES.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WEBHOOK_ANALYSIS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/meet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/.prettierrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/ENV_RECORDING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/ENV_SETUP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/WEBHOOK_SETUP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/eslint.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/nest-cli.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/app.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/app.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/app.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/livekit/livekit.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/participant/dto/mute-track.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/participant/dto/update-participant.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/participant/participant.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/participant/participant.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/participant/participant.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/create-room.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/request-token.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/dto/start-recording.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/room/room.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/webhook/webhook.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/webhook/webhook.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/src/modules/webhook/webhook.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/test/app.e2e-spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/test/jest-e2e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/tsconfig.build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/server-livekit/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/RECORDING_AUTO_STOP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/SHADCN_COMPONENTS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/alert.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/avatar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/badge.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/card.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/dialog.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/dropdown-menu.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/form.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/input.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/label.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/popover.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/select.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/sheet.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/tabs.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/textarea.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/components/ui/tooltip.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/eslint.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/lib/config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/lib/utils.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/next.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/postcss.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/public/file.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/public/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/public/next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/public/vercel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/public/window.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/attendance-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/chat-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/file-sharing-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/participant-video-overlay.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/participants-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/poll-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/reactions-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/recording-options-modal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/recording-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/recordings-list.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/screen-share-button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/settings-modal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/timer-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/video-grid.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/components/whiteboard-panel.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/src/app/room/[roomId]/room-client.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web-livekit/tsconfig.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,12 +127,16 @@
     &quot;assignee&quot;: &quot;Lain4504&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Lain4504/webrtc.git&quot;,
-    &quot;accountId&quot;: &quot;849886b4-fefd-425b-8df5-973c7910d660&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Lain4504/webrtc.git",
+    "accountId": "b00df774-879c-47f6-b5d3-0a65d83c1c54"
   }
-}</component>
+}]]></component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -47,6 +152,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "#1 on webhook",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
@@ -57,7 +163,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "E:\\Ky8\\webrtc\\apps\\meet\\node_modules\\prettier",
-    "ts.external.directory.path": "E:\\Ky8\\webrtc\\apps\\web-livekit\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "E:\\Ky8\\webrtc\\apps\\components-js\\tooling\\eslint-config-custom\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -83,9 +189,13 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.109" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.109" />
       </set>
     </attachedChunks>
+  </component>
+  <component name="SwiftWorkspaceSettings">
+    <option name="detectedToolchain" value="true" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -101,6 +211,7 @@
       <workItem from="1765503464936" duration="4799000" />
       <workItem from="1765509998029" duration="2353000" />
       <workItem from="1765555167665" duration="6111000" />
+      <workItem from="1765596374586" duration="334000" />
     </task>
     <task id="LOCAL-00001" summary="create project">
       <option name="closed" value="true" />
