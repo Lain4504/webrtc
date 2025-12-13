@@ -65,3 +65,21 @@ h2 a {
 h2 a {
   text-decoration: none;
 }
+
+/* Custom buttons wrapper in control bar */
+.lk-custom-buttons-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Ensure control bar layout is not broken */
+.lk-control-bar,
+.control-bar {
+  position: relative;
+}
+
+.lk-control-bar .lk-custom-buttons-wrapper,
+.control-bar .lk-custom-buttons-wrapper {
+  flex-shrink: 0;
+}
