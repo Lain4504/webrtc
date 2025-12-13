@@ -24,6 +24,7 @@ export type CustomControlBarControls = {
   settings?: boolean;
   raiseHand?: boolean;
   reactions?: boolean;
+  whiteboard?: boolean;
 };
 
 const trackSourceToProtocol = (source: Track.Source) => {
@@ -90,9 +91,10 @@ export function CustomControlBar({
     visibleControls.chat ??= localPermissions.canPublishData && controls?.chat;
   }
 
-  // Enable RaiseHand and Reactions by default
+  // Enable RaiseHand, Reactions, and Whiteboard by default
   visibleControls.raiseHand ??= controls?.raiseHand !== false;
   visibleControls.reactions ??= controls?.reactions !== false;
+  visibleControls.whiteboard ??= controls?.whiteboard !== false;
 
   const showIcon = React.useMemo(
     () => variation === 'minimal' || variation === 'verbose',
@@ -155,9 +157,38 @@ export function CustomControlBar({
           {showText && (isScreenShareEnabled ? 'Stop screen share' : 'Share screen')}
         </TrackToggle>
       )}
-      {/* Custom buttons: RaiseHand and Reactions before Chat */}
+      {/* Custom buttons: RaiseHand, Reactions, and Whiteboard before Chat */}
       {visibleControls.raiseHand && <RaiseHandButton />}
       {visibleControls.reactions && <ReactionsButton />}
+      {visibleControls.whiteboard && (
+        <button
+          className="lk-button lk-button-menu"
+          onClick={() => {
+            const event = new CustomEvent('lk-widget-action', {
+              detail: { msg: 'toggle_whiteboard' }
+            });
+            window.dispatchEvent(event);
+          }}
+        >
+          {showIcon && (
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M3 3a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H3zm0 1h14a1 1 0 011 1v7H2V5a1 1 0 011-1zm14 11H3a1 1 0 01-1-1v-1h16v1a1 1 0 01-1 1z"
+                fill="currentColor"
+              />
+            </svg>
+          )}
+          {showText && 'Whiteboard'}
+        </button>
+      )}
       {visibleControls.chat && (
         <ChatToggle>
           {showIcon && (

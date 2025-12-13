@@ -15,6 +15,7 @@ export interface VideoConferenceWithFeaturesProps extends React.ComponentProps<t
   enableRaiseHand?: boolean;
   enableReactions?: boolean;
   enablePolls?: boolean;
+  enableWhiteboard?: boolean;
 }
 
 /**
@@ -28,6 +29,7 @@ export function VideoConferenceWithFeatures({
   enableRaiseHand = true,
   enableReactions = true,
   enablePolls = true,
+  enableWhiteboard = true,
   ...videoConferenceProps
 }: VideoConferenceWithFeaturesProps) {
   return (

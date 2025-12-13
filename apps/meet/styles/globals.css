@@ -1,3 +1,5 @@
+@import 'tldraw/tldraw.css';
+
 * {
   box-sizing: border-box;
 }
@@ -25,13 +27,13 @@ body {
   padding-inline: 2rem;
 }
 
-.header > img {
+.header>img {
   display: block;
   margin: auto;
   max-width: 100%;
 }
 
-.header > h2 {
+.header>h2 {
   font-family: 'TWK Everett', sans-serif;
   font-style: normal;
   font-weight: 400;

@@ -230,6 +230,7 @@ function VideoConferenceComponent(props: {
           enableRaiseHand={true}
           enableReactions={true}
           enablePolls={true}
+          enableWhiteboard={true}
         />
         <DebugMode />
         <RecordingIndicator />

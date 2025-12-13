@@ -22,9 +22,13 @@ import {
   useCreateLayoutContext,
   usePinnedTracks,
   useTracks,
+  useRoomContext,
 } from '@livekit/components-react';
 import { ChatWithTabs } from './ChatWithTabs';
 import { CustomControlBar } from './CustomControlBar';
+import { CustomParticipantTile } from './CustomParticipantTile';
+import { CustomFocusLayout } from './CustomFocusLayout';
+import WhiteboardPanel from './WhiteboardPanel';
 
 
 export interface CustomVideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -52,6 +56,7 @@ export function CustomVideoConference({
     unreadMessages: 0,
     showSettings: false,
   });
+  const [showWhiteboard, setShowWhiteboard] = React.useState(false);
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null);
 
   const tracks = useTracks(
@@ -67,8 +72,93 @@ export function CustomVideoConference({
     setWidgetState(state);
   };
 
+  // Handle custom whiteboard toggle
+  React.useEffect(() => {
+    const handleWhiteboardToggle = (event: CustomEvent) => {
+      if (event.detail?.msg === 'toggle_whiteboard') {
+        setShowWhiteboard(prev => !prev);
+      }
+    };
+
+    window.addEventListener('lk-widget-action' as any, handleWhiteboardToggle as any);
+    return () => {
+      window.removeEventListener('lk-widget-action' as any, handleWhiteboardToggle as any);
+    };
+  }, []);
+
+  const room = useRoomContext();
+
+  // **APPROACH 2: Track if whiteboard was open before screen share started**
+  const whiteboardBeforeScreenShare = React.useRef(false);
+
+  // Broadcast whiteboard state callback
+  const broadcastWhiteboardState = React.useCallback((isOpen: boolean) => {
+    if (!room) return;
+
+    const encoder = new TextEncoder();
+    const message = JSON.stringify({
+      type: 'whiteboard-state',
+      isOpen
+    });
+    const data = encoder.encode(message);
+
+    room.localParticipant?.publishData(data, { reliable: true });
+  }, [room]);
+
+  // Sync whiteboard state across participants via data channel
+  React.useEffect(() => {
+    if (!room) return;
+
+    const handleDataReceived = (payload: Uint8Array, participant?: any) => {
+      const decoder = new TextDecoder();
+      const message = decoder.decode(payload);
+
+      try {
+        const data = JSON.parse(message);
+        if (data.type === 'whiteboard-state') {
+          setShowWhiteboard(data.isOpen);
+        }
+      } catch (e) {
+        // Not a whiteboard state message, ignore
+      }
+    };
+
+    room.on(RoomEvent.DataReceived, handleDataReceived);
+    return () => {
+      room.off(RoomEvent.DataReceived, handleDataReceived);
+    };
+  }, [room]);
+
+  // Broadcast whiteboard state when it changes
+  React.useEffect(() => {
+    if (!room) return;
+
+    const encoder = new TextEncoder();
+    const message = JSON.stringify({
+      type: 'whiteboard-state',
+      isOpen: showWhiteboard
+    });
+    const data = encoder.encode(message);
+
+    // Broadcast to all participants
+    room.localParticipant?.publishData(data, { reliable: true });
+  }, [showWhiteboard, room]);
+
   const layoutContext = useCreateLayoutContext();
 
+  // Track whiteboard state - no longer creating virtual track
+  const isWhiteboardFocused = React.useRef(false);
+
+  React.useEffect(() => {
+    if (showWhiteboard && !isWhiteboardFocused.current) {
+      // Mark whiteboard as focused
+      isWhiteboardFocused.current = true;
+    } else if (!showWhiteboard) {
+      isWhiteboardFocused.current = false;
+    }
+  }, [showWhiteboard]);
+
+  // Use original tracks, no virtual track injection
   const screenShareTracks = tracks
     .filter(isTrackReference)
     .filter((track) => track.publication.source === Track.Source.ScreenShare);
@@ -76,15 +166,31 @@ export function CustomVideoConference({
   const focusTrack = usePinnedTracks(layoutContext)?.[0];
   const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
 
+  // Clear whiteboard focus when closed
   React.useEffect(() => {
-    // If screen share tracks are published, and no pin is set explicitly, auto set the screen share.
+    if (!showWhiteboard && isWhiteboardFocused.current) {
+      isWhiteboardFocused.current = false;
+    }
+  }, [showWhiteboard]);
+
+  React.useEffect(() => {
+    // Priority: Screen share > Whiteboard
+    // If screen share tracks are published, auto set the screen share
     if (
       screenShareTracks.some((track) => track.publication.isSubscribed) &&
       lastAutoFocusedScreenShareTrack.current === null
     ) {
       log.debug('Auto set screen share focus:', { newScreenShareTrack: screenShareTracks[0] });
+      layoutContext.pin.dispatch?.({ msg: 'clear_pin' });
       layoutContext.pin.dispatch?.({ msg: 'set_pin', trackReference: screenShareTracks[0] });
       lastAutoFocusedScreenShareTrack.current = screenShareTracks[0];
+
+      // **APPROACH 2: Auto-close whiteboard when screen share starts**
+      if (showWhiteboard) {
+        whiteboardBeforeScreenShare.current = true;
+        setShowWhiteboard(false);
+        broadcastWhiteboardState(false);
+      }
     } else if (
       lastAutoFocusedScreenShareTrack.current &&
       !screenShareTracks.some(
@@ -96,7 +202,15 @@ export function CustomVideoConference({
       log.debug('Auto clearing screen share focus.');
       layoutContext.pin.dispatch?.({ msg: 'clear_pin' });
       lastAutoFocusedScreenShareTrack.current = null;
+
+      // **APPROACH 2: Auto-resume whiteboard when screen share stops**
+      if (whiteboardBeforeScreenShare.current) {
+        setShowWhiteboard(true);
+        broadcastWhiteboardState(true);
+        whiteboardBeforeScreenShare.current = false;
+      }
     }
+
     if (focusTrack && !isTrackReference(focusTrack)) {
       const updatedFocusTrack = tracks.find(
         (tr) =>
@@ -114,6 +228,8 @@ export function CustomVideoConference({
     focusTrack?.publication?.trackSid,
     tracks,
     layoutContext,
+    showWhiteboard,
+    broadcastWhiteboardState,
   ]);
 
   // useWarnAboutMissingStyles(); // Not exported from package, skip for now
@@ -126,19 +242,35 @@ export function CustomVideoConference({
           onWidgetChange={widgetUpdate}
         >
           <div className="lk-video-conference-inner">
-            {!focusTrack ? (
+            {!focusTrack && !showWhiteboard ? (
               <div className="lk-grid-layout-wrapper">
                 <GridLayout tracks={tracks}>
-                  <ParticipantTile />
+                  <CustomParticipantTile />
                 </GridLayout>
+              </div>
+            ) : !focusTrack && showWhiteboard ? (
+              <div className="lk-focus-layout-wrapper">
+                <FocusLayoutContainer>
+                  <CarouselLayout tracks={carouselTracks}>
+                    <CustomParticipantTile />
+                  </CarouselLayout>
+                  <div className="lk-focus-layout" style={{ position: 'relative', width: '100%', height: '100%' }}>
+                    <WhiteboardPanel />
+                    <div className="lk-participant-metadata" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 10 }}>
+                      <div className="lk-participant-metadata-item">
+                        <span className="lk-participant-name">Whiteboard</span>
+                      </div>
+                    </div>
+                  </div>
+                </FocusLayoutContainer>
               </div>
             ) : (
               <div className="lk-focus-layout-wrapper">
                 <FocusLayoutContainer>
                   <CarouselLayout tracks={carouselTracks}>
-                    <ParticipantTile />
+                    <CustomParticipantTile />
                   </CarouselLayout>
-                  {focusTrack && <FocusLayout trackRef={focusTrack} />}
+                  {focusTrack && <CustomFocusLayout trackRef={focusTrack} />}
                 </FocusLayoutContainer>
               </div>
             )}
