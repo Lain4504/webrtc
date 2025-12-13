@@ -58,7 +58,4 @@ npm-debug.log*
 *.pem
 /apps/slate/
 /apps/sync-canvas/
-/apps/components-js/
-/apps/agent-starter-react/
-/apps/agent-starter-node/
 /apps/web-livekit/
